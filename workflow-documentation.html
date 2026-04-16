@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MICS International — Workflow Documentation V4</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Oswald:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --white: #FFFFFF; --bg: #FAFBFC; --surface: #FFFFFF; --surface-2: #F8FAFC; --surface-3: #F1F5F9;
+  --border: #E2E8F0; --border-light: #EEF2F7; --border-strong: #CBD5E1;
+  --text-1: #0F172A; --text-2: #334155; --text-3: #64748B; --text-4: #94A3B8;
+  --navy: #0B2A4A; --navy-hover: #0F3A63; --navy-soft: #EFF4FA; --navy-softer: #F6F9FC;
+  --charcoal: #1E293B; --slate: #475569; --slate-soft: #F1F5F9;
+  --success: #059669; --success-soft: #ECFDF5;
+  --warning: #D97706; --warning-soft: #FFFBEB;
+  --info: #0EA5E9; --info-soft: #F0F9FF;
+  --amber: #B45309; --amber-soft: #FEF3C7;
+}
+body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 10.5px; line-height: 1.6; color: var(--text-1); background: #EDF0F3; -webkit-font-smoothing: antialiased; }
+.doc-page { width: 28cm; min-height: 19.5cm; margin: 0 auto 24px; background: white; box-shadow: 0 20px 60px rgba(15,23,42,0.08); border-radius: 10px; padding: 36px 44px; page-break-after: always; position: relative; border: 1px solid var(--border); }
+.doc-page-num { position: absolute; bottom: 16px; right: 24px; font-size: 9px; color: var(--text-4); font-family: 'JetBrains Mono', monospace; letter-spacing: 1px; }
+.doc-page-footer { position: absolute; bottom: 16px; left: 24px; font-size: 9px; color: var(--text-4); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
+
+/* MICS Logo - NAVY (no red) */
+.mics-logo { display: inline-block; padding: 8px 18px; border: 3px solid var(--navy); background: var(--white); font-family: 'Oswald', Impact, sans-serif; font-weight: 800; font-size: 34px; color: var(--navy); letter-spacing: 3px; line-height: 1; border-radius: 3px; }
+.mics-logo-sm { display: inline-block; padding: 3px 8px; border: 2px solid var(--navy); background: var(--white); font-family: 'Oswald', sans-serif; font-weight: 800; font-size: 12px; color: var(--navy); letter-spacing: 1.5px; line-height: 1; border-radius: 2px; }
+.mics-tagline { font-size: 11px; color: var(--text-2); font-weight: 700; letter-spacing: 0.3px; margin-top: 8px; }
+
+/* Document Header */
+.doc-head { padding-bottom: 14px; border-bottom: 2px solid var(--navy); margin-bottom: 22px; display: flex; justify-content: space-between; align-items: flex-end; }
+.doc-head-left { display: flex; align-items: center; gap: 12px; }
+.doc-head-meta { }
+.doc-head-kicker { font-size: 9px; letter-spacing: 1.5px; color: var(--text-3); text-transform: uppercase; font-weight: 600; }
+.doc-head-title { font-size: 20px; font-weight: 700; color: var(--text-1); letter-spacing: -0.4px; margin-top: 2px; }
+.doc-head-right { text-align: right; font-size: 9px; color: var(--text-3); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; }
+
+/* Section titles */
+h1.sec-title { font-size: 24px; font-weight: 800; color: var(--navy); letter-spacing: -0.6px; margin-bottom: 4px; }
+h2.sub-title { font-size: 15px; font-weight: 700; color: var(--charcoal); margin: 16px 0 8px; letter-spacing: -0.2px; }
+h3.micro-title { font-size: 11px; font-weight: 700; color: var(--text-2); margin: 12px 0 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.lede { font-size: 11px; color: var(--text-3); margin-bottom: 16px; line-height: 1.7; font-weight: 500; max-width: 85%; }
+p { margin-bottom: 8px; line-height: 1.7; }
+
+/* Boxes */
+.rule-box { background: var(--navy-soft); border-left: 4px solid var(--navy); border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 10.5px; }
+.rule-box-label { font-size: 9px; color: var(--navy); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.warn-box { background: var(--warning-soft); border-left: 4px solid var(--warning); border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 10.5px; }
+.warn-box-label { font-size: 9px; color: var(--warning); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.info-box { background: var(--info-soft); border-left: 4px solid var(--info); border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 10.5px; }
+.info-box-label { font-size: 9px; color: var(--info); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.success-box { background: var(--success-soft); border-left: 4px solid var(--success); border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 10.5px; }
+.success-box-label { font-size: 9px; color: var(--success); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.amber-box { background: var(--amber-soft); border-left: 4px solid var(--amber); border-radius: 8px; padding: 12px 16px; margin: 10px 0; font-size: 10.5px; }
+.amber-box-label { font-size: 9px; color: var(--amber); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+/* Tables */
+table.doc-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5px; }
+table.doc-table thead th { background: var(--navy); color: white; padding: 8px 10px; text-align: left; font-weight: 700; font-size: 9px; letter-spacing: 0.3px; text-transform: uppercase; border-right: 1px solid rgba(255,255,255,0.15); }
+table.doc-table tbody td { padding: 7px 10px; border-bottom: 1px solid var(--border-light); vertical-align: top; color: var(--text-1); }
+table.doc-table tbody tr:nth-child(even) { background: var(--surface-2); }
+table.doc-table tbody tr:hover { background: var(--navy-softer); }
+table.doc-table.compact tbody td { padding: 5px 8px; font-size: 9px; }
+
+/* Pills */
+.pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 11px; font-size: 9px; font-weight: 600; }
+.pill-navy { background: var(--navy-soft); color: var(--navy); }
+.pill-success { background: var(--success-soft); color: var(--success); }
+.pill-warn { background: var(--warning-soft); color: var(--warning); }
+.pill-info { background: var(--info-soft); color: var(--info); }
+.pill-amber { background: var(--amber-soft); color: var(--amber); }
+.pill-slate { background: var(--slate-soft); color: var(--slate); }
+.emp-code { font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--surface-3); color: var(--charcoal); padding: 2px 6px; border-radius: 3px; border: 1px solid var(--border); font-weight: 600; }
+
+/* Cover Page */
+.cover-page { height: 19.5cm; background: white; display: flex; flex-direction: column; justify-content: space-between; padding: 60px 56px; position: relative; }
+.cover-band { position: absolute; top: 0; left: 0; right: 0; height: 8px; background: var(--navy); }
+.cover-band-bot { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--slate); }
+.cover-top { }
+.cover-meta { font-size: 10px; color: var(--text-3); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-top: 30px; }
+.cover-center { text-align: center; }
+.cover-brand { font-family: 'Oswald', sans-serif; font-weight: 800; font-size: 14px; color: var(--navy); letter-spacing: 4px; margin-bottom: 14px; }
+.cover-title { font-size: 68px; font-weight: 800; color: var(--charcoal); letter-spacing: -2.5px; line-height: 1.02; margin-bottom: 18px; }
+.cover-title span { color: var(--navy); display: block; }
+.cover-sub { font-size: 14px; color: var(--text-2); font-weight: 500; margin-bottom: 30px; max-width: 520px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+.cover-divider { width: 80px; height: 3px; background: var(--navy); margin: 24px auto; }
+.cover-logo-block { text-align: center; margin-top: 20px; }
+.cover-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+.cover-bottom-col { }
+.cover-bottom-label { font-size: 9px; color: var(--text-4); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 4px; }
+.cover-bottom-val { font-size: 11px; color: var(--text-1); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+
+/* TOC */
+.toc-wrap { column-count: 2; column-gap: 36px; margin-top: 16px; }
+.toc-part { break-inside: avoid; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.toc-part:last-child { border-bottom: none; }
+.toc-part-num { font-size: 9px; letter-spacing: 1.5px; color: var(--navy); font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
+.toc-part-title { font-size: 14px; color: var(--charcoal); font-weight: 700; letter-spacing: -0.2px; margin-bottom: 8px; }
+.toc-item { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; font-size: 10px; color: var(--text-2); border-bottom: 1px dotted var(--border); }
+.toc-item:last-child { border-bottom: none; }
+.toc-item-page { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: var(--text-3); font-weight: 600; }
+
+/* Flow Diagrams */
+.flow-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 12px 0; }
+.flow-cell { background: var(--white); border: 1px solid var(--border); border-radius: 6px; padding: 10px 8px; text-align: center; position: relative; }
+.flow-cell-num { font-size: 8px; color: var(--text-4); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+.flow-cell-title { font-size: 10px; color: var(--charcoal); font-weight: 700; margin-top: 3px; }
+.flow-cell-desc { font-size: 8.5px; color: var(--text-3); margin-top: 4px; line-height: 1.5; }
+.flow-cell.active { background: var(--navy); border-color: var(--navy); }
+.flow-cell.active .flow-cell-num { color: rgba(255,255,255,0.5); }
+.flow-cell.active .flow-cell-title { color: white; }
+.flow-cell.active .flow-cell-desc { color: rgba(255,255,255,0.85); }
+
+/* Two-column layout */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.four-col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+/* Card */
+.mini-card { background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.mini-card-label { font-size: 8px; color: var(--text-3); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+.mini-card-val { font-size: 13px; font-weight: 700; color: var(--charcoal); margin-top: 3px; }
+.mini-card-sub { font-size: 9px; color: var(--text-3); margin-top: 2px; }
+
+.num-list { margin: 8px 0 8px 18px; }
+.num-list li { margin-bottom: 5px; line-height: 1.7; font-size: 10.5px; }
+.bullet-list { margin: 8px 0 8px 16px; list-style: none; }
+.bullet-list li { position: relative; padding-left: 14px; margin-bottom: 4px; line-height: 1.7; font-size: 10.5px; }
+.bullet-list li::before { content: '▸'; position: absolute; left: 0; color: var(--navy); font-weight: 700; }
+
+/* Badge */
+.badge { display: inline-block; background: var(--slate); color: white; padding: 2px 8px; border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: 0.3px; text-transform: uppercase; }
+.badge-success { background: var(--success); }
+.badge-warn { background: var(--warning); }
+.badge-info { background: var(--info); }
+.badge-amber { background: var(--amber); }
+
+@page { size: A4 landscape; margin: 0; }
+@media print {
+  body { background: white; }
+  .doc-page { box-shadow: none; margin: 0; border-radius: 0; page-break-after: always; border: none; width: 29.7cm; height: 21cm; }
+  .doc-page:last-child { page-break-after: auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- PAGE 01 · COVER                                -->
+<!-- ============================================= -->
+<div class="doc-page cover-page">
+  <div class="cover-band"></div>
+  <div class="cover-band-bot"></div>
+  <div class="cover-top">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+      <div>
+        <div class="mics-logo">MICS</div>
+        <div class="mics-tagline">Comprehensive Financial Services</div>
+      </div>
+      <div style="text-align: right;">
+        <div class="cover-bottom-label">Document Ref</div>
+        <div class="cover-bottom-val" style="color: var(--navy);">MICS-WF-V4-2026</div>
+        <div class="cover-bottom-label" style="margin-top: 16px;">Classification</div>
+        <div class="cover-bottom-val" style="color: var(--charcoal);">Internal · Controlled</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-brand">MICS INTERNATIONAL</div>
+    <h1 class="cover-title">Workflow<span>Documentation</span></h1>
+    <div class="cover-divider"></div>
+    <p class="cover-sub">A comprehensive reference for the MICS International Zoho ecosystem — covering ownership rules, lead-to-cash flow, service delivery, HR operations, automation logic and governance across 19 sections and 46 pages.</p>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-bottom-col">
+      <div class="cover-bottom-label">Version</div>
+      <div class="cover-bottom-val">V4.0 — Final</div>
+    </div>
+    <div class="cover-bottom-col">
+      <div class="cover-bottom-label">Effective Date</div>
+      <div class="cover-bottom-val">15 April 2026</div>
+    </div>
+    <div class="cover-bottom-col">
+      <div class="cover-bottom-label">Pages</div>
+      <div class="cover-bottom-val">46 pages · 19 sections</div>
+    </div>
+    <div class="cover-bottom-col">
+      <div class="cover-bottom-label">Owner</div>
+      <div class="cover-bottom-val">Office of the Partners</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 02 · TABLE OF CONTENTS                    -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Contents</div>
+        <h1 class="doc-head-title">Table of Contents</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">
+      MICS-WF-V4-2026<br>PAGE 02 / 46
+    </div>
+  </div>
+
+  <p class="lede">This document is organized into three logical parts. Part I establishes the foundation — who, what and how. Part II documents the core lead-to-cash process. Part III covers delivery operations and governance layers.</p>
+
+  <div class="toc-wrap">
+    <div class="toc-part">
+      <div class="toc-part-num">Part I · Foundations</div>
+      <div class="toc-part-title">Who, What, How</div>
+      <div class="toc-item"><span>1 · Executive Summary &amp; System Overview</span><span class="toc-item-page">03 — 04</span></div>
+      <div class="toc-item"><span>2 · Organizational Structure &amp; Role Hierarchy</span><span class="toc-item-page">05 — 07</span></div>
+      <div class="toc-item"><span>3 · Employee Code System &amp; Directory</span><span class="toc-item-page">08 — 09B</span></div>
+    </div>
+
+    <div class="toc-part">
+      <div class="toc-part-num">Part II · Lead to Cash</div>
+      <div class="toc-part-title">Sales &amp; Revenue Flow</div>
+      <div class="toc-item"><span>4 · Lead Management Workflow</span><span class="toc-item-page">10 — 13</span></div>
+      <div class="toc-item"><span>5 · Deal &amp; Sales Pipeline Workflow</span><span class="toc-item-page">14 — 17</span></div>
+      <div class="toc-item"><span>6 · Proposal &amp; Approval Workflow</span><span class="toc-item-page">18 — 19</span></div>
+      <div class="toc-item"><span>7 · Payment Gate &amp; Invoice Workflow</span><span class="toc-item-page">20 — 21</span></div>
+      <div class="toc-item"><span>8 · Execution &amp; Service Delivery Workflow</span><span class="toc-item-page">22 — 24</span></div>
+      <div class="toc-item"><span>9 · Service Frequency &amp; Renewal Management</span><span class="toc-item-page">25 — 26</span></div>
+    </div>
+
+    <div class="toc-part">
+      <div class="toc-part-num">Part III · Operations &amp; Governance</div>
+      <div class="toc-part-title">Performance, People, Rules</div>
+      <div class="toc-item"><span>10 · Sales Targets &amp; Performance Tracking</span><span class="toc-item-page">27 — 28</span></div>
+      <div class="toc-item"><span>11 · Client Ownership &amp; Attribution Rules</span><span class="toc-item-page">29 — 30</span></div>
+      <div class="toc-item"><span>12 · External Referral &amp; Commission Tracking</span><span class="toc-item-page">31</span></div>
+      <div class="toc-item"><span>13 · HR, Attendance &amp; Leave Workflows</span><span class="toc-item-page">32 — 34</span></div>
+      <div class="toc-item"><span>14 · Recruitment Pipeline Workflow</span><span class="toc-item-page">35 — 36</span></div>
+      <div class="toc-item"><span>15 · Marketing &amp; Communication Workflows</span><span class="toc-item-page">37 — 38</span></div>
+      <div class="toc-item"><span>16 · Document &amp; Credentials Management</span><span class="toc-item-page">39 — 40</span></div>
+      <div class="toc-item"><span>17 · Automation Rules Reference (50+ rules)</span><span class="toc-item-page">41 — 42</span></div>
+      <div class="toc-item"><span>18 · Access Control &amp; Security Matrix</span><span class="toc-item-page">43 — 44</span></div>
+      <div class="toc-item"><span>19 · Integration Architecture</span><span class="toc-item-page">45</span></div>
+    </div>
+  </div>
+
+  <div class="doc-page-footer">MICS INTERNATIONAL · WORKFLOW DOCUMENTATION V4</div>
+  <div class="doc-page-num">02 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 03 · EXECUTIVE SUMMARY (Section 1.1)      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 01 · Foundations</div>
+        <h1 class="doc-head-title">Executive Summary</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 03 / 46</div>
+  </div>
+
+  <p class="lede">MICS International delivers comprehensive financial, tax, audit and business advisory services to clients across the UAE and GCC. This document codifies the operating system that powers every client engagement — from first touch to renewal — across a single Zoho-based technology stack.</p>
+
+  <h2 class="sub-title">System Purpose</h2>
+  <p>The MICS Zoho ecosystem unifies Sales, Execution, Finance, HR, Marketing and Admin into a single source of truth. It replaces a previously fragmented process where departments used separate tools and shared logins obscured individual accountability.</p>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Core Operating Principle</div>
+    Every record, every action, every notification carries a traceable <strong>Employee Code</strong>. Shared logins are permitted for cost reasons, but every submitted record captures which individual staff member performed the action, enabling full personal accountability within a shared infrastructure.
+  </div>
+
+  <h2 class="sub-title">Scope of This Document</h2>
+  <p>This Workflow Documentation is paired with a companion Visual Design Guide (MICS-VDG-V4). Together they describe <em>what</em> the system does (this document) and <em>what</em> it looks like (design guide).</p>
+
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Domain</th><th style="width: 18%;">Zoho Product</th><th>Primary Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td>Lead → Deal</td><td>Zoho CRM</td><td>Lead capture, qualification, deal management, proposal generation, e-signature</td></tr>
+      <tr><td>Billing</td><td>Zoho Books</td><td>Invoicing, payment collection, credit notes, referral commissions</td></tr>
+      <tr><td>Delivery</td><td>Zoho Projects / CRM Custom Module</td><td>Work Orders, tasks, service-frequency scheduling, client credentials vault</td></tr>
+      <tr><td>People &amp; Time</td><td>Zoho People</td><td>Employee records, attendance, leave, onboarding, performance review</td></tr>
+      <tr><td>Marketing</td><td>Zoho Marketing Plus</td><td>Campaigns, email nurture, social, attribution and ROI</td></tr>
+      <tr><td>Documents</td><td>Zoho Sign + WorkDrive</td><td>Engagement letters, signed contracts, drive auto-organization</td></tr>
+      <tr><td>Automation</td><td>Zoho Flow</td><td>Cross-app triggers, 50+ automation rules, escalations</td></tr>
+      <tr><td>Analytics</td><td>Zoho Analytics</td><td>Revenue attribution, retention, cross-entity reporting</td></tr>
+      <tr><td>Messaging</td><td>Cliq · WhatsApp Biz · SalesIQ</td><td>Internal chat, inbound lead WhatsApp, website live chat</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Document Conventions</h2>
+  <ul class="bullet-list">
+    <li><strong>Rule boxes (navy)</strong> mark non-negotiable business rules that drive automation logic.</li>
+    <li><strong>Warning boxes (amber)</strong> flag exceptions and edge cases that require human review.</li>
+    <li><strong>Info boxes (blue)</strong> provide supporting context, examples and rationale.</li>
+    <li><strong>Employee Code</strong> blocks (e.g. <span class="emp-code">EMP-003</span>) identify the responsible individual behind any action.</li>
+  </ul>
+
+  <div class="doc-page-footer">1 · EXECUTIVE SUMMARY</div>
+  <div class="doc-page-num">03 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 04 · EXECUTIVE SUMMARY (Section 1.2)      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 01 · Foundations</div>
+        <h1 class="doc-head-title">System Overview &amp; Core Rules</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 04 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Seven Unbreakable Rules</h2>
+  <p class="lede">These rules are enforced by Zoho Flow automations and cannot be bypassed by any user role, including Partners. They ensure data integrity, accountability and client experience consistency.</p>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 01 · Employee Code Attribution</div>
+    Every lead, contact, deal, invoice, work order, document and task records the Employee Code of the person who created or last modified it. Shared logins do not bypass this — the code is entered at record creation.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 02 · Mandatory Payment Gate</div>
+    No Work Order is created and no execution can begin until the agreed deposit (typically 50%) is received and reconciled in Zoho Books. The gate is enforced automatically.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 03 · Ownership Is Set At Creation</div>
+    Manually created leads, contacts and accounts are owned by the person who created them. Web/chat inquiries are assigned via round-robin OR to the first responder. Ownership transfers require a logged reason.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 04 · Lead Source Owner Is Permanent</div>
+    The person or source that brought a lead to MICS is permanently recorded and never changes — even if the lead owner changes. This preserves attribution for marketing ROI and referral tracking.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 05 · Handler History Is Append-Only</div>
+    Every owner change is recorded as a new Handler History entry with timestamp and reason. No entry can be deleted or edited — only new entries added.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 06 · Execution Sees Everything</div>
+    Once assigned, the execution team has FULL visibility into their client's data: signed contract, fees, portal credentials (FTA, DED, MOF, GDRFA, ICP), service history, BD owner and payment status.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Rule 07 · Every Action Is Audited</div>
+    All record views, edits, exports, shares and password reveals are written to an immutable audit log, keyed by Employee Code, timestamp and record ID. Retained for 7 years.
+  </div>
+
+  <h2 class="sub-title">Key Metrics The System Tracks</h2>
+  <div class="four-col">
+    <div class="mini-card"><div class="mini-card-label">Total Headcount</div><div class="mini-card-val">46</div><div class="mini-card-sub">UAE 20 · India 8 · Remote 18</div></div>
+    <div class="mini-card"><div class="mini-card-label">Active Deals</div><div class="mini-card-val">24</div><div class="mini-card-sub">AED 8.2M in pipeline</div></div>
+    <div class="mini-card"><div class="mini-card-label">Work Orders</div><div class="mini-card-val">12</div><div class="mini-card-sub">active · 3 overdue</div></div>
+    <div class="mini-card"><div class="mini-card-label">YTD Revenue</div><div class="mini-card-val">AED 12.5M</div><div class="mini-card-sub">+28% YoY · 82% collected</div></div>
+  </div>
+
+  <div class="doc-page-footer">1 · EXECUTIVE SUMMARY</div>
+  <div class="doc-page-num">04 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 05 · ORGANIZATIONAL STRUCTURE             -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 02 · Foundations</div>
+        <h1 class="doc-head-title">Organizational Structure</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 05 / 46</div>
+  </div>
+
+  <p class="lede">MICS International operates a 7-tier governance model that balances clear escalation paths with flat day-to-day collaboration. The model is enforced through Zoho role hierarchy and data visibility rules.</p>
+
+  <h2 class="sub-title">The Seven Tiers (Names Redacted for Privacy)</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 8%;">Tier</th><th style="width: 26%;">Role</th><th style="width: 12%;">Headcount</th><th>Responsibility</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">T1</span></td><td><strong>Founder</strong></td><td>1</td><td>Firm ownership, strategic direction, capital decisions, partnership agreements, final escalation point for any dispute.</td></tr>
+      <tr><td><span class="badge">T2</span></td><td><strong>Partners (×3) + Associate Partner (×1)</strong></td><td>4</td><td>P&amp;L ownership of core business lines. Client relationship governance for strategic accounts. Cross-functional alignment. Associate Partner operates as partner-delegate authority on operations.</td></tr>
+      <tr><td><span class="badge">T3</span></td><td><strong>Department Heads</strong></td><td>4</td><td>Head of Business Development · Head of Communications · HR &amp; Admin Manager · Head of Accounts. Each owns a department's results and reports to Partners.</td></tr>
+      <tr><td><span class="badge">T4</span></td><td><strong>Managers</strong></td><td>3</td><td>Team leads within departments, client portfolio owners, approval authority up to defined thresholds. Report to relevant Department Head.</td></tr>
+      <tr><td><span class="badge">T5</span></td><td><strong>Executions &amp; Sales</strong></td><td>~23</td><td>Delivery and revenue-facing team: Senior Accountants, Associates (Tax, Advisory, Transfer Pricing, Audit), Analysts (Financial, Investment, Banking, Operations, Corporate Finance), Operations Executives across UAE, India and Remote.</td></tr>
+      <tr><td><span class="badge">T6</span></td><td><strong>Support</strong></td><td>~7</td><td>Accountants, Accounts Officers, HR Coordinator, HR &amp; Admin support, Executive Assistant — cross-functional support to all tiers.</td></tr>
+      <tr><td><span class="badge">T7</span></td><td><strong>Interns</strong></td><td>~4</td><td>Structured internship programme across Tax, Advisory, Audit and Operations. Typical tenure 3–12 months with defined learning objectives.</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size: 10px; color: var(--text-3); font-style: italic; margin-top: 8px;">Total directory-listed staff: 46. Individual names redacted from this document for data-protection; names remain in the live Zoho People directory controlled by HR.</p>
+
+  <h2 class="sub-title">Universal Sales Rule</h2>
+  <div class="info-box">
+    <div class="info-box-label">◉ Everyone Can Sell</div>
+    Any employee at T2–T5 with a quota can originate a deal across any MICS service line. BD staff are not siloed into single departments. The service fulfillment happens in the appropriate execution team, but the origination credit (and revenue attribution) goes to whoever brought the deal in.
+  </div>
+
+  <h2 class="sub-title">Multi-Role Support</h2>
+  <p>A single employee may hold multiple simultaneous roles. For example, a Partner (T2) may also act as Head of Accounting (T4) — the system grants the union of permissions for all assigned roles, but the Employee Code remains constant.</p>
+
+  <h2 class="sub-title">Geographic Distribution (Actual)</h2>
+  <div class="three-col">
+    <div class="mini-card"><div class="mini-card-label">UAE · Dubai Office</div><div class="mini-card-val">20</div><div class="mini-card-sub">43% · Primary HQ, all client-facing tiers</div></div>
+    <div class="mini-card"><div class="mini-card-label">India · Ahmedabad</div><div class="mini-card-val">8</div><div class="mini-card-sub">17% · In-office delivery hub</div></div>
+    <div class="mini-card"><div class="mini-card-label">Remote · Multi-country</div><div class="mini-card-val">18</div><div class="mini-card-sub">40% · Senior &amp; specialist roles</div></div>
+  </div>
+
+  <div class="doc-page-footer">2 · ORGANIZATIONAL STRUCTURE</div>
+  <div class="doc-page-num">05 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 06 · ORG HIERARCHY DIAGRAM                -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 02 · Hierarchy</div>
+        <h1 class="doc-head-title">Reporting Hierarchy Diagram</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 06 / 46</div>
+  </div>
+
+  <p class="lede">Visual reporting structure showing the chain of escalation. Operational collaboration happens horizontally across tiers — this diagram governs formal approval and escalation only. Personal names are redacted and replaced with Employee Codes only.</p>
+
+  <!-- Org Chart -->
+  <div style="margin: 24px 0;">
+    <!-- Tier 1 FOUNDER -->
+    <div style="display: flex; justify-content: center;">
+      <div style="background: var(--navy); color: white; padding: 12px 28px; border-radius: 8px; text-align: center; min-width: 240px;">
+        <div style="font-size: 8px; letter-spacing: 1.5px; opacity: 0.7; font-weight: 700;">TIER 1</div>
+        <div style="font-size: 14px; font-weight: 700; margin-top: 3px;">Founder</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: 'JetBrains Mono', monospace; margin-top: 3px;">EMP-001</div>
+      </div>
+    </div>
+
+    <div style="height: 14px; width: 2px; background: var(--navy); margin: 0 auto;"></div>
+
+    <!-- Tier 2 Partners + Assoc Partner -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 40px;">
+      <div style="background: var(--charcoal); color: white; padding: 10px 12px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T2 · PARTNER</div>
+        <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Partner</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-002</div>
+      </div>
+      <div style="background: var(--charcoal); color: white; padding: 10px 12px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T2 · PARTNER</div>
+        <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Partner</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-003</div>
+      </div>
+      <div style="background: var(--charcoal); color: white; padding: 10px 12px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T2 · PARTNER</div>
+        <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Partner</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-004</div>
+      </div>
+      <div style="background: var(--charcoal); color: white; padding: 10px 12px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T2 · ASSOC</div>
+        <div style="font-size: 11px; font-weight: 700; margin-top: 2px;">Assoc. Partner</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-005</div>
+      </div>
+    </div>
+
+    <div style="height: 14px; width: 2px; background: var(--charcoal); margin: 0 auto;"></div>
+
+    <!-- Tier 3 Heads (4) -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; padding: 0 30px;">
+      <div style="background: var(--slate); color: white; padding: 10px 10px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T3 · HEAD</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Head of Business Development</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-006</div>
+      </div>
+      <div style="background: var(--slate); color: white; padding: 10px 10px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T3 · HEAD</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Head of Communications</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-007</div>
+      </div>
+      <div style="background: var(--slate); color: white; padding: 10px 10px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T3 · HEAD</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">HR &amp; Admin Manager</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-008</div>
+      </div>
+      <div style="background: var(--slate); color: white; padding: 10px 10px; border-radius: 6px; text-align: center;">
+        <div style="font-size: 8px; letter-spacing: 1px; opacity: 0.7; font-weight: 700;">T3 · HEAD</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Head of Accounts</div>
+        <div style="font-size: 9px; opacity: 0.8; font-family: monospace; margin-top: 2px;">EMP-009</div>
+      </div>
+    </div>
+
+    <div style="height: 14px; width: 2px; background: var(--slate); margin: 0 auto;"></div>
+
+    <!-- Tier 4 Managers (3) -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 0 80px;">
+      <div style="background: var(--navy-soft); color: var(--navy); padding: 9px 10px; border-radius: 6px; text-align: center; border: 1px solid var(--navy);">
+        <div style="font-size: 8px; font-weight: 700;">T4 · MANAGER</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Manager</div>
+        <div style="font-size: 8.5px; font-family: monospace; margin-top: 2px;">EMP-010</div>
+      </div>
+      <div style="background: var(--navy-soft); color: var(--navy); padding: 9px 10px; border-radius: 6px; text-align: center; border: 1px solid var(--navy);">
+        <div style="font-size: 8px; font-weight: 700;">T4 · MANAGER</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Manager</div>
+        <div style="font-size: 8.5px; font-family: monospace; margin-top: 2px;">EMP-011</div>
+      </div>
+      <div style="background: var(--navy-soft); color: var(--navy); padding: 9px 10px; border-radius: 6px; text-align: center; border: 1px solid var(--navy);">
+        <div style="font-size: 8px; font-weight: 700;">T4 · MANAGER</div>
+        <div style="font-size: 10px; font-weight: 700; margin-top: 2px;">Manager</div>
+        <div style="font-size: 8.5px; font-family: monospace; margin-top: 2px;">EMP-012</div>
+      </div>
+    </div>
+
+    <div style="height: 14px; width: 2px; background: var(--navy); margin: 8px auto 0;"></div>
+
+    <!-- Tiers 5-7 Summary -->
+    <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; text-align: center;">
+      <div style="font-size: 9px; color: var(--text-3); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px;">T5 · T6 · T7 — Delivery &amp; Support Teams</div>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+        <div><div style="font-size: 20px; font-weight: 800; color: var(--navy);">~23</div><div style="font-size: 9px; color: var(--text-3);">Executions &amp; Sales (EMP-013 → EMP-035)</div></div>
+        <div><div style="font-size: 20px; font-weight: 800; color: var(--navy);">~7</div><div style="font-size: 9px; color: var(--text-3);">Support (EMP-036 → EMP-042)</div></div>
+        <div><div style="font-size: 20px; font-weight: 800; color: var(--navy);">~4</div><div style="font-size: 9px; color: var(--text-3);">Interns (EMP-043 → EMP-046)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-page-footer">2 · ORGANIZATIONAL STRUCTURE</div>
+  <div class="doc-page-num">06 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 07 · ROLE RESPONSIBILITIES                -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 02 · Responsibilities</div>
+        <h1 class="doc-head-title">Role Responsibilities &amp; Approval Authority</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 07 / 46</div>
+  </div>
+
+  <p class="lede">Approval authority is tier-based. Every deal, invoice, discount, refund, new hire and policy change requires sign-off from the appropriate tier. The system enforces this through Zoho approval workflows.</p>
+
+  <h2 class="sub-title">Deal Approval Matrix</h2>
+  <table class="doc-table">
+    <thead><tr><th>Deal Size</th><th>BD Lead (T5/T6)</th><th>Department Head (T4)</th><th>Partner (T2)</th><th>Owner (T1)</th></tr></thead>
+    <tbody>
+      <tr><td>Up to AED 50,000</td><td>✓ Approve</td><td>Notify only</td><td>—</td><td>—</td></tr>
+      <tr><td>AED 50K — 150K</td><td>Submit</td><td>✓ Approve</td><td>Notify only</td><td>—</td></tr>
+      <tr><td>AED 150K — 500K</td><td>Submit</td><td>Review</td><td>✓ Approve</td><td>Notify only</td></tr>
+      <tr><td>Above AED 500K</td><td>Submit</td><td>Review</td><td>Review</td><td>✓ Approve</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Discount Approval Matrix</h2>
+  <table class="doc-table">
+    <thead><tr><th>Discount %</th><th>Authority Required</th><th>Justification Required</th></tr></thead>
+    <tbody>
+      <tr><td>Up to 5%</td><td>BD Lead</td><td>None</td></tr>
+      <tr><td>5% — 10%</td><td>Department Head</td><td>Competitive rationale</td></tr>
+      <tr><td>10% — 20%</td><td>Partner</td><td>Strategic rationale + LTV projection</td></tr>
+      <tr><td>Above 20%</td><td>Owner / CEO</td><td>Board-level justification</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">HR &amp; People Authority</h2>
+  <table class="doc-table">
+    <thead><tr><th>Action</th><th>Approver</th></tr></thead>
+    <tbody>
+      <tr><td>Leave up to 5 days</td><td>Line Manager (T5)</td></tr>
+      <tr><td>Leave 6–15 days</td><td>Department Head (T4)</td></tr>
+      <tr><td>Leave 16–30 days</td><td>Associate Partner (T3) + HR Head</td></tr>
+      <tr><td>New hire — T6/T7</td><td>Department Head + HR Head</td></tr>
+      <tr><td>New hire — T4/T5</td><td>Partner + Owner</td></tr>
+      <tr><td>Termination</td><td>Partner + HR Head + Legal review</td></tr>
+      <tr><td>Salary adjustment</td><td>Department Head + HR Head + Partner (if &gt;10%)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Escalation Rule</div>
+    Any approval request that does not receive action within its SLA (24h for T5, 48h for T4, 72h for T2/T1) auto-escalates to the next tier up. This prevents bottlenecks.
+  </div>
+
+  <div class="doc-page-footer">2 · ORGANIZATIONAL STRUCTURE</div>
+  <div class="doc-page-num">07 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 08 · EMPLOYEE CODE SYSTEM                 -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 03 · Foundations</div>
+        <h1 class="doc-head-title">Employee Code System</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 08 / 46</div>
+  </div>
+
+  <p class="lede">The Employee Code is the primary key identifying every individual staff member across every Zoho app. It is the mechanism that allows shared departmental logins while preserving per-individual accountability.</p>
+
+  <h2 class="sub-title">Code Format</h2>
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Format: <span style="font-family: monospace;">EMP-NNN</span></div>
+    Employee codes are 3-digit sequential numbers prefixed with <code>EMP-</code>. Examples: <span class="emp-code">EMP-001</span> (Founder), <span class="emp-code">EMP-002</span>, <span class="emp-code">EMP-003</span>, <span class="emp-code">EMP-004</span> (Partners), <span class="emp-code">EMP-005</span> (Associate Partner), <span class="emp-code">EMP-046</span> (most recent hire). Codes are never recycled — once assigned they persist even after termination, to preserve historical attribution.
+  </div>
+
+  <h2 class="sub-title">Why Shared Logins?</h2>
+  <p>MICS operates on a licensed Zoho model where per-user pricing is a material cost factor. Rather than purchase 46 individual Zoho seats, the organization uses 9 shared departmental logins that map to the mics.ae email architecture. The Employee Code field then attributes every action to a specific person within that shared session.</p>
+
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Shared Login Group</th><th style="width: 24%;">Username</th><th>Employee Code Range</th><th style="width: 8%;">Count</th></tr></thead>
+    <tbody>
+      <tr><td>Partners &amp; Heads</td><td style="font-family: monospace;">partners@mics.ae</td><td>EMP-001 → EMP-009 (Founder, Partners, Associate Partner &amp; Heads)</td><td>9</td></tr>
+      <tr><td>Managers</td><td style="font-family: monospace;">managers@mics.ae</td><td>EMP-010 → EMP-012 (Manager tier)</td><td>3</td></tr>
+      <tr><td>Tax &amp; Advisory</td><td style="font-family: monospace;">tax@mics.ae</td><td>EMP-013 → EMP-019 (Tax &amp; Advisory delivery)</td><td>~7</td></tr>
+      <tr><td>Accounts &amp; Finance</td><td style="font-family: monospace;">accounts@mics.ae</td><td>EMP-020 → EMP-026 (Senior Accountants, Analysts)</td><td>~7</td></tr>
+      <tr><td>Audit</td><td style="font-family: monospace;">audit@mics.ae</td><td>EMP-027 → EMP-028 (Audit Associates)</td><td>2</td></tr>
+      <tr><td>Operations</td><td style="font-family: monospace;">ops@mics.ae</td><td>EMP-029 → EMP-035 (Operations Executives)</td><td>~7</td></tr>
+      <tr><td>Support</td><td style="font-family: monospace;">support@mics.ae</td><td>EMP-036 → EMP-042 (Admin, Accounts Officers)</td><td>~7</td></tr>
+      <tr><td>HR &amp; Admin</td><td style="font-family: monospace;">hr@mics.ae</td><td>Assigned HR Heads &amp; Coordinators</td><td>cross-tier</td></tr>
+      <tr><td>Interns</td><td style="font-family: monospace;">interns@mics.ae</td><td>EMP-043 → EMP-046 (structured programme)</td><td>~4</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">The Login Flow</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(5, 1fr);">
+    <div class="flow-cell"><div class="flow-cell-num">STEP 1</div><div class="flow-cell-title">Pick Session</div><div class="flow-cell-desc">User opens Zoho, picks their dept login (e.g. <em>tax@</em>)</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">STEP 2</div><div class="flow-cell-title">Enter Code</div><div class="flow-cell-desc">System prompts for Employee Code (EMP-XXXX)</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">STEP 3</div><div class="flow-cell-title">Verify PIN</div><div class="flow-cell-desc">4-digit personal PIN confirms identity</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">STEP 4</div><div class="flow-cell-title">Session Active</div><div class="flow-cell-desc">All actions tagged with Employee Code</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">STEP 5</div><div class="flow-cell-title">Audit Log</div><div class="flow-cell-desc">Every action written to immutable log</div></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ PIN Security</div>
+    The 4-digit PIN is stored using bcrypt hashing. Failed PIN attempts (3 in a row) lock the Employee Code for 15 minutes and notify HR + the Employee directly. PINs must be rotated every 90 days.
+  </div>
+
+  <div class="doc-page-footer">3 · EMPLOYEE CODE SYSTEM</div>
+  <div class="doc-page-num">08 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 09 · EMPLOYEE DIRECTORY                   -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 03 · Directory</div>
+        <h1 class="doc-head-title">Employee Directory · 52 Staff</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 09 / 46</div>
+  </div>
+
+  <p class="lede">The master roster of all MICS positions — 46 active staff across Dubai (UAE), Ahmedabad (India) and multiple remote locations. Names are redacted from this document for data-protection. Names remain in the live Zoho People directory, which is access-controlled by HR.</p>
+
+  <table class="doc-table compact">
+    <thead><tr><th style="width: 10%;">Code</th><th style="width: 8%;">Tier</th><th style="width: 32%;">Role</th><th style="width: 22%;">Department</th><th>Location</th></tr></thead>
+    <tbody>
+      <tr><td><span class="emp-code">EMP-001</span></td><td>T1</td><td><strong>Founder</strong></td><td>Management</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-002</span></td><td>T2</td><td><strong>Partner</strong></td><td>Management</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-003</span></td><td>T2</td><td><strong>Partner</strong></td><td>Management</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-004</span></td><td>T2</td><td><strong>Partner</strong></td><td>Management</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-005</span></td><td>T2</td><td><strong>Associate Partner</strong></td><td>Management</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-006</span></td><td>T3</td><td><strong>Head of Business Development</strong></td><td>Business Development</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-007</span></td><td>T3</td><td><strong>Head of Communications</strong></td><td>Communications</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-008</span></td><td>T3</td><td><strong>HR &amp; Admin Manager</strong></td><td>HR &amp; Admin</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-009</span></td><td>T3</td><td><strong>Head of Accounts</strong></td><td>Accounts &amp; Finance</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-010</span></td><td>T4</td><td>Manager</td><td>Tax / Advisory</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-011</span></td><td>T4</td><td>Manager</td><td>Tax / Advisory</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-012</span></td><td>T4</td><td>Manager</td><td>Compliance / Advisory</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-013</span></td><td>T5</td><td>Executions · Senior Associate — Tax</td><td>Tax</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-014</span></td><td>T5</td><td>Executions · Associate — Transfer Pricing</td><td>Tax</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-015</span></td><td>T5</td><td>Executions · Associate — Tax Advisory</td><td>Tax</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-016</span></td><td>T5</td><td>Executions · Advisory Executive</td><td>Advisory</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-017</span></td><td>T5</td><td>Executions · Advisory Associate</td><td>Advisory</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-018</span></td><td>T5</td><td>Sales · Business Development Associate</td><td>Business Development</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-019</span></td><td>T5</td><td>Sales · Business Development Associate</td><td>Business Development</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-020</span></td><td>T5</td><td>Executions · Senior Accountant</td><td>Accounts &amp; Finance</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-021</span></td><td>T5</td><td>Executions · Senior Accounts Officer</td><td>Accounts &amp; Finance</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-022</span></td><td>T5</td><td>Executions · Financial Analyst</td><td>Finance Analytics</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-023</span></td><td>T5</td><td>Executions · Investment Analyst</td><td>Finance Analytics</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-024</span></td><td>T5</td><td>Executions · Corporate Finance Analyst</td><td>Finance Analytics</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-025</span></td><td>T5</td><td>Executions · Banking Operations Analyst</td><td>Banking Ops</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-026</span></td><td>T5</td><td>Executions · Operations Analyst</td><td>Operations</td><td>UAE · Dubai</td></tr>
+      <tr><td colspan="5" style="text-align: center; padding: 6px; font-size: 9px; color: var(--text-3); font-style: italic;">… continued on next page (EMP-027 through EMP-046)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">3 · EMPLOYEE CODE SYSTEM · DIRECTORY</div>
+  <div class="doc-page-num">09 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 09B · EMPLOYEE DIRECTORY (continuation)   -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 03 · Directory (continued)</div>
+        <h1 class="doc-head-title">Employee Directory · Continued</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 09B / 46</div>
+  </div>
+
+  <p class="lede">Continuation of the master list. Codes EMP-027 through EMP-046 complete the 46-person roster across Support and Intern tiers. Names remain redacted; only role, department and location are published here.</p>
+
+  <table class="doc-table compact">
+    <thead><tr><th style="width: 10%;">Code</th><th style="width: 8%;">Tier</th><th style="width: 32%;">Role</th><th style="width: 22%;">Department</th><th>Location</th></tr></thead>
+    <tbody>
+      <tr><td><span class="emp-code">EMP-027</span></td><td>T5</td><td>Executions · Operations Analyst</td><td>Operations</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-028</span></td><td>T5</td><td>Executions · Accounts &amp; Audit Associate</td><td>Audit</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-029</span></td><td>T5</td><td>Executions · Accounts Officer &amp; Audit Assistant</td><td>Accounts &amp; Audit</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-030</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-031</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-032</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-033</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-034</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-035</span></td><td>T5</td><td>Executions · Operations Executive</td><td>Operations</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-036</span></td><td>T6</td><td>Support · Accountant</td><td>Accounts &amp; Finance</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-037</span></td><td>T6</td><td>Support · Accounts Officer</td><td>Accounts &amp; Finance</td><td>UAE · Dubai</td></tr>
+      <tr><td><span class="emp-code">EMP-038</span></td><td>T6</td><td>Support · Accountant</td><td>Accounts &amp; Finance</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-039</span></td><td>T6</td><td>Support · Accountant</td><td>Accounts &amp; Finance</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-040</span></td><td>T6</td><td>Support · Accountant</td><td>Accounts &amp; Finance</td><td>India · Ahmedabad</td></tr>
+      <tr><td><span class="emp-code">EMP-041</span></td><td>T6</td><td>Support · Account Assistant</td><td>Accounts &amp; Finance</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-042</span></td><td>T6</td><td>Support · Executive Assistant / HR Admin</td><td>HR / Admin</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-043</span></td><td>T7</td><td>Intern · Tax</td><td>Tax</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-044</span></td><td>T7</td><td>Intern · Advisory</td><td>Advisory</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-045</span></td><td>T7</td><td>Intern · Audit</td><td>Audit</td><td>Remote</td></tr>
+      <tr><td><span class="emp-code">EMP-046</span></td><td>T7</td><td>Intern · Operations</td><td>Operations</td><td>Remote</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Location Summary</h2>
+  <div class="four-col">
+    <div class="mini-card"><div class="mini-card-label">UAE · Dubai Office</div><div class="mini-card-val">20</div><div class="mini-card-sub">43% of workforce</div></div>
+    <div class="mini-card"><div class="mini-card-label">India · Ahmedabad</div><div class="mini-card-val">8</div><div class="mini-card-sub">17% · in-office</div></div>
+    <div class="mini-card"><div class="mini-card-label">Remote · Multi-country</div><div class="mini-card-val">18</div><div class="mini-card-sub">40% · flexible work</div></div>
+    <div class="mini-card"><div class="mini-card-label">Total Active</div><div class="mini-card-val">46</div><div class="mini-card-sub">All full-time</div></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Data Source &amp; Privacy</div>
+    This directory is synced from the live Zoho People master record. <strong>Individual names are intentionally redacted from this published document</strong> — only Employee Codes, tiers and generic role descriptors appear here. Names, emails and contact details remain in Zoho People under HR-controlled access. Any change to designation, department or location propagates to this document within 24 hours via the CRM → People sync job.
+  </div>
+
+  <div class="doc-page-footer">3 · EMPLOYEE CODE SYSTEM · DIRECTORY (CONT.)</div>
+  <div class="doc-page-num">09B / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 10 · LEAD MANAGEMENT - LEAD SOURCES       -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 04 · Lead to Cash</div>
+        <h1 class="doc-head-title">Lead Management · Sources &amp; Capture</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 10 / 46</div>
+  </div>
+
+  <p class="lede">A lead is any individual or company that has shown interest in a MICS service but has not yet been qualified. Leads enter the system through nine defined channels, each with its own capture rules, SLA and ownership assignment logic.</p>
+
+  <h2 class="sub-title">The Nine Lead Sources</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 5%;">#</th><th style="width: 20%;">Source</th><th style="width: 14%;">Entry Method</th><th style="width: 16%;">Ownership Assignment</th><th style="width: 10%;">SLA</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Website Form</strong></td><td>Zoho Forms embed</td><td>Round-robin (BD team)</td><td>1 hour</td><td>Highest volume source; auto-enriches from Clearbit API</td></tr>
+      <tr><td>2</td><td><strong>WhatsApp Business</strong></td><td>Cloud API webhook</td><td>First responder</td><td>30 minutes</td><td>Inbound messages create leads automatically; transcript attached</td></tr>
+      <tr><td>3</td><td><strong>Phone / Inbound Call</strong></td><td>Reception → Manual entry</td><td>Caller's handler</td><td>2 hours</td><td>Reception logs; call recording linked via 3CX</td></tr>
+      <tr><td>4</td><td><strong>Email Inquiry</strong></td><td>hello@micsinternational.com</td><td>Round-robin</td><td>4 hours</td><td>Zoho Mail → CRM integration creates leads</td></tr>
+      <tr><td>5</td><td><strong>LinkedIn Outreach</strong></td><td>Manual entry by BD</td><td>BD who made contact</td><td>—</td><td>Outbound origination; LinkedIn URL stored</td></tr>
+      <tr><td>6</td><td><strong>Referral (External)</strong></td><td>Manual entry + source tag</td><td>BD who receives referral</td><td>2 hours</td><td>External referrer tracked for commission (see §12)</td></tr>
+      <tr><td>7</td><td><strong>Referral (Existing Client)</strong></td><td>Existing client submits</td><td>Account owner</td><td>4 hours</td><td>Tracked for retention; no commission but grateful outreach</td></tr>
+      <tr><td>8</td><td><strong>Event / Conference</strong></td><td>Badge scan / manual</td><td>Event representative</td><td>24 hours</td><td>Batch upload post-event; tagged with event name</td></tr>
+      <tr><td>9</td><td><strong>SalesIQ Live Chat</strong></td><td>Website chat widget</td><td>Chat handler</td><td>Real-time</td><td>Converts to lead when visitor shares email/phone</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Lead Capture Required Fields</h2>
+  <div class="two-col">
+    <div>
+      <h3 class="micro-title">Mandatory</h3>
+      <ul class="bullet-list">
+        <li><strong>Full Name</strong> (or Company Name if corporate)</li>
+        <li><strong>Primary Contact</strong> (email OR phone)</li>
+        <li><strong>Lead Source</strong> (dropdown, 9 options)</li>
+        <li><strong>Service Interest</strong> (multi-select)</li>
+        <li><strong>Created By</strong> (auto-populated Employee Code)</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="micro-title">Recommended</h3>
+      <ul class="bullet-list">
+        <li>Company Name + Trade License</li>
+        <li>Industry &amp; Employee Count</li>
+        <li>Financial Year End</li>
+        <li>Estimated Budget / Deal Value</li>
+        <li>Timeline / Urgency</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc-page-footer">4 · LEAD MANAGEMENT</div>
+  <div class="doc-page-num">10 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 11 · LEAD STATUS WORKFLOW                 -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 04 · Lead Status</div>
+        <h1 class="doc-head-title">Lead Status Workflow</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 11 / 46</div>
+  </div>
+
+  <p class="lede">Every lead progresses through eight defined statuses from first capture to final disposition. The status dictates SLA, notification cadence and who sees the lead in their work queue.</p>
+
+  <!-- Status Flow -->
+  <div class="flow-row" style="grid-template-columns: repeat(4, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">01 · NEW</div><div class="flow-cell-title">Unassigned</div><div class="flow-cell-desc">Just captured, awaiting owner assignment</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">02 · ASSIGNED</div><div class="flow-cell-title">Owner Notified</div><div class="flow-cell-desc">Routed to handler per source rules</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">03 · CONTACTED</div><div class="flow-cell-title">First Touch Done</div><div class="flow-cell-desc">Owner has initiated call/email</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">04 · QUALIFYING</div><div class="flow-cell-title">Discovery</div><div class="flow-cell-desc">BANT assessment in progress</div></div>
+  </div>
+  <div class="flow-row" style="grid-template-columns: repeat(4, 1fr); gap: 6px;">
+    <div class="flow-cell active"><div class="flow-cell-num">05 · QUALIFIED</div><div class="flow-cell-title">Hot Lead</div><div class="flow-cell-desc">BANT ≥ 60, ready for proposal</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">06 · PROPOSAL</div><div class="flow-cell-title">EL Sent</div><div class="flow-cell-desc">Engagement letter dispatched</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">07 · CONVERTED</div><div class="flow-cell-title">Deal Created</div><div class="flow-cell-desc">Lead → Account + Deal</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">08 · LOST</div><div class="flow-cell-title">Disqualified</div><div class="flow-cell-desc">No fit / no budget / non-responsive</div></div>
+  </div>
+
+  <h2 class="sub-title">Lead Scoring (0–100 Points)</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 28%;">Criterion</th><th style="width: 10%;">Max Points</th><th>Scoring Logic</th></tr></thead>
+    <tbody>
+      <tr><td>Budget Confirmed</td><td style="text-align: center;">25</td><td>Explicitly stated AED figure = 25 · "flexible" = 15 · unknown = 0</td></tr>
+      <tr><td>Authority / Decision Maker</td><td style="text-align: center;">20</td><td>C-level contact = 20 · Manager = 12 · Influencer = 6 · Unknown = 0</td></tr>
+      <tr><td>Need Clarity</td><td style="text-align: center;">20</td><td>Specific service + pain point = 20 · general interest = 10 · vague = 5</td></tr>
+      <tr><td>Timeline</td><td style="text-align: center;">15</td><td>&lt;30d = 15 · 30–90d = 10 · 90–180d = 5 · &gt;180d = 0</td></tr>
+      <tr><td>Engagement</td><td style="text-align: center;">10</td><td>Multiple touches / opens = 10 · single touch = 5 · no response = 0</td></tr>
+      <tr><td>ICP Fit</td><td style="text-align: center;">10</td><td>Perfect industry / size / geo match = 10 · partial = 5 · poor = 0</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Score-Based SLA</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Score</th><th style="width: 14%;">Category</th><th style="width: 14%;">First Touch</th><th style="width: 14%;">Follow-up Cadence</th><th>Notification</th></tr></thead>
+    <tbody>
+      <tr><td>80 — 100</td><td><span class="pill pill-amber">🔥 Hot</span></td><td>1 hour</td><td>Every 24 hours</td><td>Owner + Manager SMS + Cliq ping</td></tr>
+      <tr><td>50 — 79</td><td><span class="pill pill-warn">Warm</span></td><td>4 hours</td><td>Every 48 hours</td><td>Owner email + Cliq</td></tr>
+      <tr><td>25 — 49</td><td><span class="pill pill-info">Cold</span></td><td>24 hours</td><td>Weekly</td><td>Owner email</td></tr>
+      <tr><td>0 — 24</td><td><span class="pill pill-slate">Nurture</span></td><td>Auto-drip</td><td>Email sequence</td><td>No live outreach</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">4 · LEAD MANAGEMENT</div>
+  <div class="doc-page-num">11 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 12 · LEAD OWNERSHIP & ATTRIBUTION FIELDS  -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 04 · Attribution</div>
+        <h1 class="doc-head-title">Lead Ownership &amp; Attribution Fields</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 12 / 46</div>
+  </div>
+
+  <p class="lede">Every lead carries five distinct ownership-related fields. Keeping these separate (rather than collapsing them into a single "owner" field) allows MICS to track attribution across multi-touch, multi-person client journeys.</p>
+
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">Field</th><th style="width: 10%;">Mutable?</th><th style="width: 22%;">Set At</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Lead Owner</strong></td><td><span class="pill pill-warn">Yes</span></td><td>Record creation or reassignment</td><td>Current person responsible for the lead's progression. Sees it in their queue. Can change via reassignment flow.</td></tr>
+      <tr><td><strong>Lead Source Owner</strong></td><td><span class="pill pill-navy">Permanent</span></td><td>Record creation (auto)</td><td>Who brought this lead in — a BD rep for outbound, the website for inbound, an external referrer, etc. Never changes. Used for revenue attribution.</td></tr>
+      <tr><td><strong>Current Handler</strong></td><td><span class="pill pill-warn">Yes</span></td><td>Each interaction</td><td>Whoever last took action. Useful when multiple people collaborate on a lead. Auto-updates with each activity.</td></tr>
+      <tr><td><strong>Handler History</strong></td><td><span class="pill pill-success">Append-only</span></td><td>Every handler change</td><td>Immutable log. Each entry: Employee Code, timestamp, reason. Cannot be deleted or edited.</td></tr>
+      <tr><td><strong>External Referral Source</strong></td><td><span class="pill pill-navy">Permanent</span></td><td>Record creation (if applicable)</td><td>Name of the external party (vendor, partner, individual) that referred this lead. Tied to commission schedule.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="rule-box">
+    <div class="rule-box-label">Worked Example (Illustrative)</div>
+    An overseas parent company introduces its UAE free-zone subsidiary (cosmetics trading, RAKEZ) to MICS as an external referral. The prospect fills the website contact form. The round-robin routes the lead to <span class="emp-code">EMP-010</span> (Manager). After discovery, the Manager hands off to <span class="emp-code">EMP-002</span> (Partner) for the multi-service engagement conversation.<br><br>
+    <strong>Resulting fields on the Lead record:</strong><br>
+    Lead Owner = <span class="emp-code">EMP-002</span> (Partner, now)<br>
+    Lead Source Owner = Website Form (permanent)<br>
+    Current Handler = <span class="emp-code">EMP-002</span><br>
+    Handler History = [<span class="emp-code">EMP-010</span> → <span class="emp-code">EMP-002</span>, reason: "Multi-service international client, partner pitch"]<br>
+    External Referral Source = [Referrer Party Name] (permanent, 5% standard commission)
+  </div>
+
+  <h2 class="sub-title">Ownership Transfer Flow</h2>
+  <ol class="num-list">
+    <li><strong>Current owner initiates transfer</strong> by clicking Reassign on the lead record.</li>
+    <li><strong>Select new owner</strong> from Employee Code dropdown (scoped to BD + Managers).</li>
+    <li><strong>Provide reason</strong> (dropdown: Seniority / Specialty / Workload / Out of office / Other + free text).</li>
+    <li><strong>New owner receives notification</strong> via Cliq + email + CRM alert.</li>
+    <li><strong>New owner must accept</strong> within 24 hours; if not, escalates to Department Head.</li>
+    <li><strong>Handler History entry created</strong> automatically, permanent record.</li>
+  </ol>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Transfer Is Not Deletion</div>
+    When ownership transfers, the previous owner still appears in the Handler History. This is intentional — it prevents attribution gaming and ensures future sales analysis can distinguish between "brought the lead in" vs. "closed the deal."
+  </div>
+
+  <div class="doc-page-footer">4 · LEAD MANAGEMENT</div>
+  <div class="doc-page-num">12 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 13 · LEAD CONVERSION                      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 04 · Conversion</div>
+        <h1 class="doc-head-title">Lead Conversion Wizard</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 13 / 46</div>
+  </div>
+
+  <p class="lede">When a Lead reaches "Qualified" status, it can be converted into a full Account + Contact + Deal. This is a 3-step wizard that captures the remaining enrichment data.</p>
+
+  <h2 class="sub-title">Conversion Wizard Steps</h2>
+
+  <h3 class="micro-title">Step 1 · Account Enrichment</h3>
+  <p>The Lead's company becomes an Account in CRM. Additional mandatory fields unlocked at this stage:</p>
+  <ul class="bullet-list">
+    <li>Full legal name (as per trade license)</li>
+    <li>Trade License Number + Issuing Authority (DED, Free Zone, etc.)</li>
+    <li>Financial Year End (e.g. 31 Dec, 31 Mar)</li>
+    <li>Industry (dropdown: 22 sectors aligned to UAE NACE codes)</li>
+    <li>Employee count band (1–10 / 11–50 / 51–250 / 250+)</li>
+    <li>Registered Address + Billing Address</li>
+    <li>TRN (Tax Registration Number) if VAT-registered</li>
+  </ul>
+
+  <h3 class="micro-title">Step 2 · Contacts</h3>
+  <p>The Lead's primary contact becomes the first Contact on the Account. Additional contacts can be added immediately:</p>
+  <ul class="bullet-list">
+    <li>Primary Contact (from Lead, role: CFO, CEO, Finance Mgr, etc.)</li>
+    <li>Secondary Contact(s) — optional at this stage, can be added later</li>
+    <li>Accounting Contact (for Books integration — receives invoices)</li>
+    <li>Signing Authority (for engagement letters — may differ from primary)</li>
+  </ul>
+
+  <h3 class="micro-title">Step 3 · Deal Creation</h3>
+  <p>A Deal record is created representing the opportunity in play:</p>
+  <ul class="bullet-list">
+    <li>Deal Name (auto-suggested: "Account Name · Service · Year")</li>
+    <li>Service Package (multi-select from 24 services, each with frequency tag)</li>
+    <li>Estimated Value (AED, sum of selected services)</li>
+    <li>Expected Close Date</li>
+    <li>Pipeline (dropdown: MICS Services · Advisory · Recruitment · KRO Property · MICS Visa)</li>
+    <li>Stage (starts at "Qualified" by default, mirrors Lead status)</li>
+    <li>BD Owner = Lead Owner (pre-filled, can change)</li>
+    <li>Execution Assignment (optional at this point, set when Deal moves to Negotiation)</li>
+  </ul>
+
+  <h2 class="sub-title">Post-Conversion State</h2>
+  <div class="info-box">
+    <div class="info-box-label">◉ What Happens Automatically</div>
+    <ol class="num-list" style="margin-top: 6px;">
+      <li>Lead is marked "Converted" (cannot be edited; retained for reporting).</li>
+      <li>Account record created with all enrichment data.</li>
+      <li>Contact record(s) created, linked to Account.</li>
+      <li>Deal record created, linked to Account + Contacts.</li>
+      <li>All attribution fields (Lead Source Owner, External Referral, Handler History) carry forward to Deal.</li>
+      <li>Owner notified via Cliq: "Lead XYZ converted to Deal ABC · AED NNN."</li>
+      <li>Lead removed from BD worksheet; Deal added to Deal Pipeline.</li>
+    </ol>
+  </div>
+
+  <div class="doc-page-footer">4 · LEAD MANAGEMENT</div>
+  <div class="doc-page-num">13 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 14 · DEAL PIPELINES                       -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 05 · Lead to Cash</div>
+        <h1 class="doc-head-title">Deal Pipelines · Five Distinct Tracks</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 14 / 46</div>
+  </div>
+
+  <p class="lede">MICS operates five parallel deal pipelines with different stage definitions, probabilities and SLAs. A deal enters one pipeline based on the service package; cross-pipeline deals are split into separate records.</p>
+
+  <h2 class="sub-title">The Five Pipelines</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Pipeline</th><th style="width: 14%;">Avg Deal Size</th><th style="width: 14%;">Avg Cycle</th><th style="width: 14%;">Win Rate</th><th>Typical Services</th></tr></thead>
+    <tbody>
+      <tr><td><strong>MICS Services</strong></td><td>AED 80K</td><td>28 days</td><td>38%</td><td>VAT, Corporate Tax, Audit, Bookkeeping, AML, ESR</td></tr>
+      <tr><td><strong>Advisory</strong></td><td>AED 250K</td><td>60 days</td><td>28%</td><td>Transfer Pricing, Due Diligence, M&amp;A, Restructuring</td></tr>
+      <tr><td><strong>Recruitment</strong></td><td>AED 35K (placement fee)</td><td>45 days</td><td>55%</td><td>Executive search, contingency hiring</td></tr>
+      <tr><td><strong>KRO Property</strong></td><td>AED 180K (commission)</td><td>90 days</td><td>22%</td><td>Real estate transactions (separate entity)</td></tr>
+      <tr><td><strong>MICS Visa &amp; PRO</strong></td><td>AED 18K</td><td>14 days</td><td>72%</td><td>Golden Visa, Employment visas, license renewals</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">MICS Services Pipeline · Stages</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 6%;">#</th><th style="width: 18%;">Stage</th><th style="width: 12%;">Probability</th><th style="width: 14%;">SLA in stage</th><th>Auto Actions on Entry</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Qualified</strong></td><td>20%</td><td>5 business days</td><td>Deal created from lead conversion, BD Owner assigned</td></tr>
+      <tr><td>2</td><td><strong>Proposal</strong></td><td>40%</td><td>7 business days</td><td>Engagement letter template loaded, fields merged</td></tr>
+      <tr><td>3</td><td><strong>Negotiation</strong></td><td>60%</td><td>10 business days</td><td>Partner notified if &gt; AED 150K, discount approval workflow</td></tr>
+      <tr><td>4</td><td><strong>Signed</strong></td><td>85%</td><td>3 business days</td><td>Invoice generated in Books; payment gate activated</td></tr>
+      <tr><td>5</td><td><strong>Paid</strong></td><td>100%</td><td>—</td><td>Work Order auto-created, routed to Execution</td></tr>
+      <tr><td>6</td><td><strong>Delivered</strong></td><td>100%</td><td>—</td><td>Work Order closed, renewal forecast created</td></tr>
+      <tr><td>—</td><td><strong>Lost</strong> (terminal)</td><td>0%</td><td>—</td><td>Lost reason recorded; added to nurture campaign</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Stage Aging Rules</div>
+    A deal that exceeds its stage SLA triggers automated escalation: after 1×SLA a Cliq ping to owner; after 2×SLA an email to manager; after 3×SLA the deal is flagged "Stalled" on dashboards and requires manual review.
+  </div>
+
+  <div class="doc-page-footer">5 · DEAL PIPELINE</div>
+  <div class="doc-page-num">14 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 15 · DEAL DETAIL — NEGOTIATION & HANDOFF  -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 05 · Deal Detail</div>
+        <h1 class="doc-head-title">Deal Negotiation &amp; Handoff Preparation</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 15 / 46</div>
+  </div>
+
+  <p class="lede">The Negotiation stage is where most deals die if they die. Robust process discipline here — clear approval chains, transparent discount rules, documented concessions — is the single largest lever for win-rate improvement at MICS.</p>
+
+  <h2 class="sub-title">Required Fields Before Stage Advance</h2>
+  <p>A deal cannot move from <strong>Proposal</strong> to <strong>Negotiation</strong> until these fields are populated. This is enforced at the CRM layer with field validation:</p>
+  <ul class="bullet-list">
+    <li><strong>Proposal Code</strong> (auto-generated when engagement letter is dispatched)</li>
+    <li><strong>Signed Date (Expected)</strong> — within 14 days of Proposal stage entry</li>
+    <li><strong>Decision Maker Identified</strong> — Contact record tagged as "Signing Authority"</li>
+    <li><strong>Champion Identified</strong> — at least one internal contact advocating for MICS</li>
+    <li><strong>Competitors Logged</strong> — dropdown of known competing firms (can be "None known")</li>
+    <li><strong>Execution Pre-Assignment</strong> — if the deal is won, who will execute? (Name + Employee Code)</li>
+  </ul>
+
+  <h2 class="sub-title">Concession Log</h2>
+  <p>Every concession offered during negotiation is logged on the deal record. This creates a negotiation history that prevents concession creep and enables post-hoc analysis.</p>
+  <table class="doc-table">
+    <thead><tr><th style="width: 16%;">Date</th><th style="width: 14%;">Type</th><th style="width: 14%;">Value</th><th style="width: 14%;">Offered By</th><th>Justification</th></tr></thead>
+    <tbody>
+      <tr><td>—</td><td>Discount</td><td>% or AED</td><td>Employee Code</td><td>Free-text reason (e.g., "Competitor X quoted 12% less")</td></tr>
+      <tr><td>—</td><td>Scope add</td><td>Service name</td><td>Employee Code</td><td>What additional service was thrown in</td></tr>
+      <tr><td>—</td><td>Payment terms</td><td>Days</td><td>Employee Code</td><td>e.g., "30 days net → 45 days net"</td></tr>
+      <tr><td>—</td><td>Deliverable SLA</td><td>Days</td><td>Employee Code</td><td>Shorter turnaround commitment</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Concession Creep Threshold</div>
+    If cumulative concessions exceed 15% of original deal value, the deal automatically requires re-approval from a Partner (T2) before proceeding to Signed stage — even if each individual concession was within authority limits.
+  </div>
+
+  <h2 class="sub-title">Execution Pre-Assignment</h2>
+  <p>Before a deal is signed, the BD Owner must identify who in Execution will deliver the work. This prevents the "deal won but nobody to deliver" scenario. The Execution pre-assignee:</p>
+  <ul class="bullet-list">
+    <li>Is notified as a "heads-up" — not a firm commitment yet</li>
+    <li>Reviews scope and can flag capacity constraints before signing</li>
+    <li>Becomes the <strong>Exec Owner</strong> automatically when the Work Order is created post-payment</li>
+    <li>Has read access to the Deal record (to review scope and timeline)</li>
+  </ul>
+
+  <div class="doc-page-footer">5 · DEAL PIPELINE</div>
+  <div class="doc-page-num">15 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 16 · DEAL WON / LOST                      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 05 · Terminal Stages</div>
+        <h1 class="doc-head-title">Won, Lost &amp; Nurture Outcomes</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 16 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Deal Won — Automated Chain</h2>
+  <p>When a deal moves to "Signed" stage (both parties signed), a cascade of automations fires:</p>
+  <div class="flow-row" style="grid-template-columns: repeat(5, 1fr); gap: 6px;">
+    <div class="flow-cell active"><div class="flow-cell-num">◐ STEP 1</div><div class="flow-cell-title">Contract Archived</div><div class="flow-cell-desc">Signed PDF to Drive · AES-256 encrypted</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">◐ STEP 2</div><div class="flow-cell-title">Invoice Generated</div><div class="flow-cell-desc">Zoho Books auto-creates invoice per deposit terms</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">◐ STEP 3</div><div class="flow-cell-title">Payment Gate Opens</div><div class="flow-cell-desc">Awaiting deposit · Execution BLOCKED</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">◐ STEP 4</div><div class="flow-cell-title">Deposit Received</div><div class="flow-cell-desc">Books reconciles · Gate status → CLEARED</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">◐ STEP 5</div><div class="flow-cell-title">Work Order Created</div><div class="flow-cell-desc">Auto-routed to pre-assigned Exec Owner</div></div>
+  </div>
+
+  <h2 class="sub-title">Lost Reasons (Structured Dropdown)</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 24%;">Lost Reason Category</th><th style="width: 14%;">Frequency (YTD)</th><th>Sub-reasons</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Price / Budget</strong></td><td>34%</td><td>Too expensive, no budget, chose cheaper competitor</td></tr>
+      <tr><td><strong>Timing</strong></td><td>21%</td><td>Not now, deferred to next year, internal delays</td></tr>
+      <tr><td><strong>Competitor</strong></td><td>18%</td><td>Lost to named competitor (specify), existing relationship</td></tr>
+      <tr><td><strong>No Decision</strong></td><td>12%</td><td>Ghosted, prospect stopped responding, champion left</td></tr>
+      <tr><td><strong>Scope Misfit</strong></td><td>8%</td><td>MICS cannot deliver this service, out of geography</td></tr>
+      <tr><td><strong>Internal (MICS)</strong></td><td>5%</td><td>Capacity issue, proposal quality, BD turnover</td></tr>
+      <tr><td><strong>Other</strong></td><td>2%</td><td>Free text required</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Lost ≠ Dead</div>
+    Every lost deal auto-enrolls in a 12-month nurture sequence (email drip + quarterly BD check-in). Roughly 18% of nurture-enrolled lost deals re-open within 18 months. Do not delete lost deals — they are future pipeline.
+  </div>
+
+  <h2 class="sub-title">Post-Mortem Requirements</h2>
+  <p>Deals lost above AED 150K trigger a mandatory post-mortem within 5 business days. The BD Owner completes a structured form:</p>
+  <ul class="bullet-list">
+    <li>What was the true reason? (beyond the dropdown)</li>
+    <li>What would we do differently?</li>
+    <li>Is there a pattern (same competitor, same objection)?</li>
+    <li>Can we re-engage? When and how?</li>
+    <li>What did we learn about our pricing / positioning?</li>
+  </ul>
+  <p>Completed post-mortems are reviewed monthly by the Head of BD in a cross-pipeline learning session.</p>
+
+  <div class="doc-page-footer">5 · DEAL PIPELINE</div>
+  <div class="doc-page-num">16 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 17 · PIPELINE VELOCITY & HYGIENE          -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 05 · Pipeline Health</div>
+        <h1 class="doc-head-title">Pipeline Velocity &amp; Hygiene Rules</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 17 / 46</div>
+  </div>
+
+  <p class="lede">Pipeline hygiene is the discipline of keeping deal records current, accurate and actionable. A messy pipeline produces unreliable forecasts and wastes BD time. MICS enforces hygiene through weekly automated reviews and a public pipeline-health scoreboard.</p>
+
+  <h2 class="sub-title">The Four Hygiene Metrics</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 24%;">Metric</th><th style="width: 14%;">Target</th><th style="width: 14%;">Amber</th><th style="width: 14%;">Red</th><th>Auto Action</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Stage Age</strong></td><td>&lt; 1× SLA</td><td>1–2× SLA</td><td>&gt; 2× SLA</td><td>Deal flagged "Stalled"</td></tr>
+      <tr><td><strong>Activity Recency</strong></td><td>&lt; 7 days</td><td>7–14 days</td><td>&gt; 14 days</td><td>Owner + Manager Cliq ping</td></tr>
+      <tr><td><strong>Close Date Accuracy</strong></td><td>Future</td><td>Past ≤ 14d</td><td>Past &gt; 14d</td><td>Force update or close-lost</td></tr>
+      <tr><td><strong>Contact Breadth</strong></td><td>≥ 2 contacts</td><td>1 contact</td><td>0 contacts</td><td>Single-thread warning</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Weekly Pipeline Review Cadence</h2>
+  <p>Every Monday at 09:00 local time:</p>
+  <ol class="num-list">
+    <li><strong>Automated report generated</strong> — sent to each BD Owner + Manager with their pipeline health card.</li>
+    <li><strong>Each BD schedules 30 min self-review</strong> — updates stale deals, closes dead ones, adjusts close dates.</li>
+    <li><strong>Manager 1:1s</strong> on Tuesday — focus on deals at risk and top 5 close opportunities.</li>
+    <li><strong>Friday department huddle</strong> — public scoreboard review, celebrate wins, flag patterns.</li>
+  </ol>
+
+  <h2 class="sub-title">Deal Removal Criteria</h2>
+  <div class="warn-box">
+    <div class="warn-box-label">◆ When To Mark Closed-Lost</div>
+    Deals meeting ANY of these conditions should be closed-lost (not left in pipeline):<br>
+    • No response to 3+ outreach attempts over 21 days<br>
+    • Champion has left and no new champion identified within 14 days<br>
+    • Prospect explicitly said "no" or "not now" (and "not now" &gt; 90 days)<br>
+    • Close date has slipped 3+ times with no progression<br>
+    • Deal has been in same stage for 3× the SLA
+  </div>
+
+  <h2 class="sub-title">Forecasting Rules</h2>
+  <p>The official forecast is calculated as the sum of <em>weighted</em> deal values, where the weight is the stage probability. Managers can adjust individual deal weights ("commit" = 90%, "call" = 50%, "upside" = 20%) but these adjustments are logged for forecast-accuracy tracking.</p>
+
+  <div class="doc-page-footer">5 · DEAL PIPELINE</div>
+  <div class="doc-page-num">17 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 18 · PROPOSAL WORKFLOW                    -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 06 · Proposals</div>
+        <h1 class="doc-head-title">Proposal &amp; Engagement Letter Workflow</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 18 / 46</div>
+  </div>
+
+  <p class="lede">The Engagement Letter is the single most important client-facing document MICS produces. It converts intent into commitment. The proposal system is built around reusable templates with merge fields, ensuring consistency while preserving per-client customization.</p>
+
+  <h2 class="sub-title">Template Library Structure</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 24%;">Template</th><th style="width: 14%;">Merge Fields</th><th style="width: 14%;">Owner</th><th>Use Case</th></tr></thead>
+    <tbody>
+      <tr><td><strong>MICS Standard EL</strong> <span class="pill pill-amber">Default</span></td><td>28</td><td>Director</td><td>Multi-service annual compliance packages</td></tr>
+      <tr><td><strong>Audit &amp; Assurance</strong></td><td>32</td><td>Audit Partner</td><td>Statutory audit engagements (includes independence clauses)</td></tr>
+      <tr><td><strong>VAT Compliance Package</strong></td><td>24</td><td>Tax Head</td><td>Quarterly VAT filing + advisory</td></tr>
+      <tr><td><strong>Corporate Tax Onboarding</strong></td><td>26</td><td>Tax Head</td><td>New corporate tax registration + first filing</td></tr>
+      <tr><td><strong>Advisory Scope</strong></td><td>18</td><td>Advisory Head</td><td>Project-based work (M&amp;A, TP, DD)</td></tr>
+      <tr><td><strong>Business Setup</strong></td><td>22</td><td>PRO Manager</td><td>Company formation + PRO services</td></tr>
+      <tr><td><strong>Visa &amp; Golden Visa</strong></td><td>16</td><td>PRO Manager</td><td>Immigration-focused engagements</td></tr>
+      <tr><td><strong>Recruitment Services</strong></td><td>14</td><td>HR Head</td><td>External search / staffing engagements</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Merge Field Categories</h2>
+  <div class="two-col">
+    <div>
+      <h3 class="micro-title">Deal Fields</h3>
+      <ul class="bullet-list" style="font-size: 10px;">
+        <li><code>{{deal.name}}</code> — Deal title</li>
+        <li><code>{{deal.amount}}</code> — Total value (AED)</li>
+        <li><code>{{deal.close_date}}</code> — Expected start</li>
+        <li><code>{{deal.proposal_ref}}</code> — EL reference code</li>
+        <li><code>{{deal.valid_until}}</code> — Proposal expiry date</li>
+      </ul>
+      <h3 class="micro-title">Account Fields</h3>
+      <ul class="bullet-list" style="font-size: 10px;">
+        <li><code>{{account.name}}</code> — Legal entity name</li>
+        <li><code>{{account.license}}</code> — Trade License number</li>
+        <li><code>{{account.address}}</code> — Registered address</li>
+        <li><code>{{account.trn}}</code> — Tax Registration Number</li>
+        <li><code>{{account.financial_ye}}</code> — Financial YE</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="micro-title">Contact Fields</h3>
+      <ul class="bullet-list" style="font-size: 10px;">
+        <li><code>{{contact.full_name}}</code> — Primary contact</li>
+        <li><code>{{contact.title}}</code> — Job title</li>
+        <li><code>{{contact.email}}</code> — Email address</li>
+        <li><code>{{signing.full_name}}</code> — Signing authority</li>
+      </ul>
+      <h3 class="micro-title">Service Fields</h3>
+      <ul class="bullet-list" style="font-size: 10px;">
+        <li><code>{{services.table}}</code> — Full scope table</li>
+        <li><code>{{services.total}}</code> — Pre-VAT subtotal</li>
+        <li><code>{{services.vat}}</code> — 5% VAT amount</li>
+        <li><code>{{services.grand_total}}</code> — Total fee</li>
+      </ul>
+      <h3 class="micro-title">Firm Fields</h3>
+      <ul class="bullet-list" style="font-size: 10px;">
+        <li><code>{{mics.signatory}}</code> — MICS countersigner</li>
+        <li><code>{{mics.signatory_title}}</code> — e.g., Director</li>
+        <li><code>{{mics.issue_date}}</code> — Today</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc-page-footer">6 · PROPOSAL WORKFLOW</div>
+  <div class="doc-page-num">18 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 19 · PROPOSAL APPROVAL & SIGNATURE        -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 06 · Approval &amp; Signing</div>
+        <h1 class="doc-head-title">Proposal Approval &amp; E-Signature</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 19 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Internal Approval Chain</h2>
+  <p>Before a proposal is sent to a client, it passes through an internal approval chain. The chain depth depends on deal size (see §2 approval matrix). A typical chain:</p>
+  <ol class="num-list">
+    <li><strong>BD Owner Draft</strong> — BD creates proposal from template, populates merge fields, reviews rendered output.</li>
+    <li><strong>Self Check</strong> — 7-point checklist: scope clarity, pricing accuracy, typos, logo, merge fields rendered, attachments, signatory names.</li>
+    <li><strong>Manager Review</strong> — BD Manager reviews in Zoho (inline comments). Can approve, request changes, or reject.</li>
+    <li><strong>Department Head</strong> (if &gt; 50K) — Reviews scope fit with delivery capacity.</li>
+    <li><strong>Partner Sign-off</strong> (if &gt; 150K) — Strategic review; may push back on pricing.</li>
+    <li><strong>Owner Approval</strong> (if &gt; 500K) — Final authority for major deals.</li>
+    <li><strong>Released to Client</strong> — Once approval chain is complete, BD Owner dispatches via Zoho Sign.</li>
+  </ol>
+
+  <h2 class="sub-title">Dual Signature Path</h2>
+  <p>Clients may sign via online Zoho Sign or via offline print-sign-scan-upload. Both paths converge to the same end state.</p>
+  <div class="two-col">
+    <div class="rule-box">
+      <div class="rule-box-label">Path A · Online (Preferred)</div>
+      Dispatch via Zoho Sign · Client signs digitally · MICS countersigns · Auto-archived · Average turnaround <strong>2.4 hours</strong> · 82% of engagements use this path.
+    </div>
+    <div class="rule-box">
+      <div class="rule-box-label">Path B · Offline Upload</div>
+      Client prefers paper · BD downloads PDF · Sends to client via email · Client prints-signs-scans-returns · BD uploads signed copy · System attributes &amp; archives · Used for 18% of engagements, typical for older government-facing clients.
+    </div>
+  </div>
+
+  <h2 class="sub-title">Signing Order (Online Path)</h2>
+  <ol class="num-list">
+    <li><strong>Client signs first</strong> — Commitment before MICS commits.</li>
+    <li><strong>MICS countersigns</strong> — Typically the Director or Partner for the relevant practice.</li>
+    <li><strong>Fully-executed copy distributed</strong> — To client email + stored in Drive under <em>Clients › [Account Name] › Signed</em>.</li>
+  </ol>
+
+  <h2 class="sub-title">Proposal Expiry</h2>
+  <p>Every proposal has a validity window (default 30 days, minimum 7, maximum 90). Upon expiry:</p>
+  <ul class="bullet-list">
+    <li>Zoho Sign envelope auto-voids</li>
+    <li>Deal stage reverts to "Negotiation" (from "Proposal")</li>
+    <li>BD Owner receives alert 7 days before expiry, 1 day before expiry, and on expiry</li>
+    <li>If prices have changed, a new proposal must be issued (not extended)</li>
+  </ul>
+
+  <div class="doc-page-footer">6 · PROPOSAL WORKFLOW</div>
+  <div class="doc-page-num">19 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 20 · PAYMENT GATE                         -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 07 · Payment &amp; Invoicing</div>
+        <h1 class="doc-head-title">Payment Gate · The Unbreakable Rule</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 20 / 46</div>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ The Payment Gate Rule</div>
+    <strong>No Work Order is created, and no service delivery begins, until the agreed deposit is received and reconciled in Zoho Books.</strong> This rule is enforced by Zoho Flow automation. It cannot be overridden by any user, including Partners or the CEO — it requires a formal policy exception recorded by the CFO and Owner.
+  </div>
+
+  <h2 class="sub-title">Why This Rule Exists</h2>
+  <ul class="bullet-list">
+    <li><strong>Protects cash flow</strong> — prevents delivery of weeks of work against unpaid invoices.</li>
+    <li><strong>Tests client seriousness</strong> — a client who won't pay a deposit is unlikely to pay the balance.</li>
+    <li><strong>Eliminates ambiguity</strong> — execution team never has to ask "has this been paid?"</li>
+    <li><strong>Protects MICS reputation</strong> — delivering then chasing payment damages the relationship.</li>
+  </ul>
+
+  <h2 class="sub-title">Gate Rules By Deal Tier</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">Deal Size</th><th style="width: 14%;">Deposit Required</th><th style="width: 16%;">Milestones</th><th>Final Payment Due</th></tr></thead>
+    <tbody>
+      <tr><td>Up to AED 25K</td><td>100%</td><td>Single payment</td><td>Before WO creation</td></tr>
+      <tr><td>AED 25K — 100K</td><td>50%</td><td>50 / 50</td><td>On milestone or delivery</td></tr>
+      <tr><td>AED 100K — 300K</td><td>40%</td><td>40 / 30 / 30</td><td>Per defined milestones in EL</td></tr>
+      <tr><td>Above AED 300K</td><td>30%</td><td>Custom (3–5 stages)</td><td>Structured per engagement</td></tr>
+      <tr><td>Government / Enterprise</td><td>By contract</td><td>As per contract</td><td>May extend to 60–90 days post-invoice</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Gate States</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">State</th><th style="width: 14%;">Badge</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><strong>AWAITING</strong></td><td><span class="pill pill-warn">Pending</span></td><td>Invoice issued, deposit not yet received. Execution blocked.</td></tr>
+      <tr><td><strong>PARTIAL</strong></td><td><span class="pill pill-info">Partial</span></td><td>Partial payment received. If below threshold, still blocked.</td></tr>
+      <tr><td><strong>CLEARED</strong></td><td><span class="pill pill-success">Cleared</span></td><td>Required threshold met. Work Order auto-created.</td></tr>
+      <tr><td><strong>OVERDUE</strong></td><td><span class="pill pill-amber">Overdue</span></td><td>Deposit not received by due date. Escalates to BD + Finance.</td></tr>
+      <tr><td><strong>EXEMPT</strong></td><td><span class="pill pill-navy">Exempt</span></td><td>Policy exception granted. Logged with CFO + Owner signature.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">7 · PAYMENT GATE</div>
+  <div class="doc-page-num">20 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 21 · INVOICE & COLLECTION                 -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 07 · Collection</div>
+        <h1 class="doc-head-title">Invoice &amp; Collection Workflow</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 21 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Invoice Lifecycle</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(6, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">01</div><div class="flow-cell-title">Generated</div><div class="flow-cell-desc">Auto from Deal Won</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">02</div><div class="flow-cell-title">Sent</div><div class="flow-cell-desc">Emailed to Accounting Contact</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">03</div><div class="flow-cell-title">Viewed</div><div class="flow-cell-desc">Tracking pixel / portal view logged</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">04</div><div class="flow-cell-title">Paid</div><div class="flow-cell-desc">Bank reconciliation matches invoice</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">05</div><div class="flow-cell-title">Receipted</div><div class="flow-cell-desc">Receipt issued to client</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">06</div><div class="flow-cell-title">Closed</div><div class="flow-cell-desc">Books entry finalized</div></div>
+  </div>
+
+  <h2 class="sub-title">Overdue Escalation Ladder</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Days Overdue</th><th style="width: 24%;">Action</th><th style="width: 20%;">Actor</th><th>Tone</th></tr></thead>
+    <tbody>
+      <tr><td>+1 day</td><td>Polite reminder email</td><td>Automated (Books)</td><td>Friendly: "Invoice due yesterday — please confirm payment status"</td></tr>
+      <tr><td>+7 days</td><td>Follow-up call</td><td>BD Owner</td><td>Relationship: "Checking in, is there anything blocking payment?"</td></tr>
+      <tr><td>+14 days</td><td>Formal reminder letter</td><td>Finance Manager</td><td>Firm: Reference contract terms, highlight late fee clause</td></tr>
+      <tr><td>+21 days</td><td>Service suspension warning</td><td>Dept Head + CFO</td><td>Serious: "Services will be suspended if unpaid within 7 days"</td></tr>
+      <tr><td>+30 days</td><td>Service suspension</td><td>Execution Owner</td><td>Action: Pause all deliverables; notify client</td></tr>
+      <tr><td>+45 days</td><td>Legal review</td><td>Partner + Legal</td><td>Escalate to demand letter / collections</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Credit Notes &amp; Refunds</h2>
+  <p>Credit notes (reducing an invoice) and refunds (returning received cash) require elevated approval:</p>
+  <ul class="bullet-list">
+    <li><strong>Credit Note up to 10% of invoice</strong> — Finance Manager + BD Owner</li>
+    <li><strong>Credit Note 10–25%</strong> — + Department Head</li>
+    <li><strong>Credit Note &gt; 25% or any refund</strong> — + Partner sign-off</li>
+    <li><strong>All credit notes</strong> — reason logged in structured dropdown (scope reduction / quality issue / relationship gesture / billing error / other)</li>
+  </ul>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Collection KPI</div>
+    Target collection rate is <strong>95% within 30 days of invoice date</strong>. YTD collection rate is 88% — a known gap owned by the Finance Manager. Monthly AR aging report is reviewed by CFO and Partners.
+  </div>
+
+  <div class="doc-page-footer">7 · PAYMENT GATE &amp; INVOICING</div>
+  <div class="doc-page-num">21 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 22 · EXECUTION HANDOFF                    -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 08 · Execution</div>
+        <h1 class="doc-head-title">Sales-to-Execution Handoff</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 22 / 46</div>
+  </div>
+
+  <p class="lede">Handoff quality is the single biggest predictor of first-month client satisfaction. A sloppy handoff — missing credentials, unclear scope, no BD context — leads to re-work, re-meetings and a shaky start to the relationship.</p>
+
+  <h2 class="sub-title">The Six-Item Handoff Checklist</h2>
+  <p>Before a Work Order is released to Execution, the BD Owner must confirm six artifacts are in place:</p>
+  <table class="doc-table">
+    <thead><tr><th style="width: 6%;">#</th><th style="width: 24%;">Artifact</th><th>Must Include</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>Signed Engagement Letter</strong></td><td>Both parties signed · Full PDF attached · Scope section intact</td></tr>
+      <tr><td>2</td><td><strong>Payment Confirmation</strong></td><td>Deposit invoice paid · Receipt attached · Gate state = CLEARED</td></tr>
+      <tr><td>3</td><td><strong>Client Contacts</strong></td><td>Primary, Accounting, Signing and Operational contacts — names, roles, emails, phones</td></tr>
+      <tr><td>4</td><td><strong>Service Scope Summary</strong></td><td>Services list with frequency tags · SLAs · Any custom terms from EL annexures</td></tr>
+      <tr><td>5</td><td><strong>Client Portal Credentials</strong></td><td>FTA, DED, MOF, GDRFA, ICP, Banking (as applicable) — logged in Credentials Vault</td></tr>
+      <tr><td>6</td><td><strong>Special Instructions</strong></td><td>BD's notes on client preferences, sensitivities, commitments made, stakeholders to avoid/prioritize</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Handoff Meeting</h2>
+  <p>For engagements above AED 100K, a synchronous handoff meeting is scheduled:</p>
+  <ul class="bullet-list">
+    <li><strong>Attendees</strong>: BD Owner, Execution Owner, Department Head (if &gt; 200K)</li>
+    <li><strong>Duration</strong>: 30 minutes</li>
+    <li><strong>Agenda</strong>: Walk through the 6-item checklist · Client background · Risks · Timeline · Q&amp;A</li>
+    <li><strong>Recorded</strong>: via Zoho Meeting; recording attached to Work Order</li>
+    <li><strong>Output</strong>: Execution formally accepts ownership; Work Order status changes from "Pending Handoff" to "Active"</li>
+  </ul>
+
+  <h2 class="sub-title">Rejection Rights</h2>
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Execution Can Reject a Handoff</div>
+    If any of the 6 items is missing or inadequate, the Execution Owner can reject the handoff within 48 hours. The Work Order remains in "Pending Handoff" and the BD Owner must remediate. This is not punitive — it is a quality control loop that prevents downstream failure.
+  </div>
+
+  <div class="doc-page-footer">8 · EXECUTION &amp; DELIVERY</div>
+  <div class="doc-page-num">22 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 23 · WORK ORDER STRUCTURE                 -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 08 · Work Orders</div>
+        <h1 class="doc-head-title">Work Order Structure</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 23 / 46</div>
+  </div>
+
+  <p class="lede">The Work Order is the master delivery record. One deal produces one Work Order, which contains all services, tasks, credentials, communication and documents for the engagement.</p>
+
+  <h2 class="sub-title">Work Order Anatomy</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Section</th><th style="width: 16%;">Source</th><th>Contents</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Client Info Block</strong></td><td>Auto from Account</td><td>Legal name · Trade license · Financial YE · Primary contact · Phone · Email · Industry</td></tr>
+      <tr><td><strong>Sales Info Block</strong></td><td>Auto from Deal</td><td>BD Owner (Code) · Deal ref · Proposal ref · Signed date · Contract value · External referral</td></tr>
+      <tr><td><strong>Payment Info Block</strong></td><td>Auto from Books</td><td>Invoice number · Invoiced · Paid · Outstanding · Gate status · Next milestone</td></tr>
+      <tr><td><strong>Execution Info Block</strong></td><td>Assignment</td><td>Exec Owner (Code) · Department · Start date · Deadline · % complete · SLA status</td></tr>
+      <tr><td><strong>Service Line Items</strong></td><td>From Deal scope</td><td>Each service with frequency tag, next due, SLA days, assigned Employee Code, status, progress</td></tr>
+      <tr><td><strong>Tasks Tab</strong></td><td>Execution creates</td><td>Checklist of deliverables · Owner · Deadline · Status · Blockers</td></tr>
+      <tr><td><strong>Documents Tab</strong></td><td>Mixed</td><td>Signed EL · Client-provided docs · Deliverables · Drafts · Reports</td></tr>
+      <tr><td><strong>Communication Tab</strong></td><td>Integrated</td><td>Email thread · WhatsApp thread · Meeting notes · Cliq discussion</td></tr>
+      <tr><td><strong>Credentials Tab</strong></td><td>Vault</td><td>Portal logins — FTA, DED, MOF, GDRFA, ICP, Banking, Insurance</td></tr>
+      <tr><td><strong>Service Schedule Tab</strong></td><td>Auto-computed</td><td>Calendar of quarterly / yearly recurring deadlines with auto-reminders</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Work Order Statuses</h2>
+  <table class="doc-table">
+    <thead><tr><th>Status</th><th>Meaning</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill pill-slate">Pending Handoff</span></td><td>Created, awaiting Execution Owner acceptance</td></tr>
+      <tr><td><span class="pill pill-navy">Active</span></td><td>Accepted; in progress</td></tr>
+      <tr><td><span class="pill pill-warn">At Risk</span></td><td>Behind schedule or blocker flagged; needs attention</td></tr>
+      <tr><td><span class="pill pill-amber">Overdue</span></td><td>Deadline missed; escalated</td></tr>
+      <tr><td><span class="pill pill-info">On Hold</span></td><td>Paused by client request or payment issue</td></tr>
+      <tr><td><span class="pill pill-success">Completed</span></td><td>All deliverables signed off; in closure</td></tr>
+      <tr><td><span class="pill pill-slate">Closed</span></td><td>Client sign-off received; renewal forecast created</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">8 · EXECUTION &amp; DELIVERY</div>
+  <div class="doc-page-num">23 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 24 · SLA & ESCALATION                     -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 08 · SLA</div>
+        <h1 class="doc-head-title">SLA Tracking &amp; Escalation Ladders</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 24 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Service SLA Library</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 26%;">Service</th><th style="width: 14%;">SLA</th><th style="width: 14%;">From</th><th>Measurement</th></tr></thead>
+    <tbody>
+      <tr><td>VAT Filing (Quarterly)</td><td>5 business days</td><td>Data receipt</td><td>Submission on FTA portal</td></tr>
+      <tr><td>Corporate Tax Filing</td><td>15 business days</td><td>Financial year close</td><td>Submission on MOF portal</td></tr>
+      <tr><td>Statutory Audit</td><td>30 business days</td><td>Audit kickoff</td><td>Signed audit report</td></tr>
+      <tr><td>Trade License Renewal</td><td>10 business days</td><td>Renewal window open</td><td>Renewed license issued</td></tr>
+      <tr><td>Business Setup</td><td>10 business days</td><td>All docs received</td><td>License issuance</td></tr>
+      <tr><td>Golden Visa Processing</td><td>21 business days</td><td>Application submission</td><td>Visa stamping</td></tr>
+      <tr><td>AML Return</td><td>7 business days</td><td>Data receipt</td><td>Regulatory submission</td></tr>
+      <tr><td>ESR Notification</td><td>5 business days</td><td>Reporting period open</td><td>Submission to MOF</td></tr>
+      <tr><td>Monthly Bookkeeping</td><td>By 10th of next month</td><td>Month close</td><td>Delivered P&amp;L + BS</td></tr>
+      <tr><td>Ad-hoc Advisory</td><td>48 hours</td><td>Query receipt</td><td>Written response</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Escalation Ladder (D+1 / D+3 / D+7)</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Trigger</th><th style="width: 24%;">Action</th><th style="width: 18%;">Actor</th><th>Channel</th></tr></thead>
+    <tbody>
+      <tr><td><strong>SLA Missed Day 1</strong></td><td>Notify Exec Owner</td><td>System auto</td><td>Cliq + email</td></tr>
+      <tr><td><strong>Day 3 Overdue</strong></td><td>Escalate to Manager</td><td>System auto</td><td>Cliq + email + SMS</td></tr>
+      <tr><td><strong>Day 7 Overdue</strong></td><td>Escalate to Department Head + BD Owner</td><td>System auto</td><td>Cliq + email + meeting request</td></tr>
+      <tr><td><strong>Day 14 Overdue</strong></td><td>Escalate to Partner · client-facing call</td><td>Dept Head</td><td>Direct partner involvement</td></tr>
+      <tr><td><strong>Day 21 Overdue</strong></td><td>Executive intervention + remediation plan</td><td>Partner + CEO</td><td>Formal client call + credit consideration</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ SLA Credit Policy</div>
+    If MICS misses an SLA due to internal delay (not client-caused), the client is entitled to a service credit: 5% for D+3, 10% for D+7, 20% for D+14, 50% for D+21. Credits are issued via credit note on the next invoice and require Partner approval.
+  </div>
+
+  <div class="doc-page-footer">8 · EXECUTION &amp; DELIVERY</div>
+  <div class="doc-page-num">24 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 25 · SERVICE FREQUENCY                    -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 09 · Frequency</div>
+        <h1 class="doc-head-title">Service Frequency Classification</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 25 / 46</div>
+  </div>
+
+  <p class="lede">Every service offered by MICS is tagged with a frequency type. This classification drives reminder schedules, capacity planning and renewal forecasting.</p>
+
+  <h2 class="sub-title">The Four Frequency Types</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Frequency</th><th style="width: 14%;">Badge</th><th style="width: 16%;">Trigger</th><th>Representative Services</th></tr></thead>
+    <tbody>
+      <tr><td><strong>One-Time</strong></td><td><span class="pill pill-info">ONE-TIME</span></td><td>Client request</td><td>Business Setup · Golden Visa · Trademark Reg · Due Diligence · M&amp;A · Bank Account Opening · Liquidation</td></tr>
+      <tr><td><strong>Monthly</strong></td><td><span class="pill pill-slate">MONTHLY</span></td><td>Month end</td><td>Bookkeeping · Payroll Processing · Management Reporting</td></tr>
+      <tr><td><strong>Quarterly</strong></td><td><span class="pill pill-warn">QUARTERLY</span></td><td>Quarter end</td><td>VAT Filing · AML Quarterly Return · Board Reporting · Financial Statements Review</td></tr>
+      <tr><td><strong>Yearly</strong></td><td><span class="pill pill-success">YEARLY</span></td><td>Financial year event</td><td>Statutory Audit · Corporate Tax Filing · Trade License Renewal · ESR Notification · Annual Board Meeting · Budget</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Reminder Schedule By Frequency</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 16%;">Frequency</th><th>Reminder Schedule (days before due date)</th></tr></thead>
+    <tbody>
+      <tr><td>One-Time</td><td>T-14, T-7, T-3, T-1, T-0 (due day), T+1 (overdue alert)</td></tr>
+      <tr><td>Monthly</td><td>T-5, T-2, T-0, T+1 (overdue)</td></tr>
+      <tr><td>Quarterly</td><td>T-30, T-14, T-7, T-3, T-0, T+1</td></tr>
+      <tr><td>Yearly</td><td>T-60, T-30, T-14, T-7, T-3, T-0, T+1</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Capacity Planning Impact</h2>
+  <p>Each service is also tagged with an estimated hours-per-instance. The combination of frequency × instances × hours gives the annual capacity load per Execution staff member. This drives:</p>
+  <ul class="bullet-list">
+    <li><strong>Hiring decisions</strong> — Are we over or under capacity for Q3 VAT season?</li>
+    <li><strong>Intake velocity</strong> — Can we take on more clients for Corporate Tax this year?</li>
+    <li><strong>Cross-training</strong> — Can an Audit associate take on Tax work in peak season?</li>
+  </ul>
+
+  <div class="doc-page-footer">9 · SERVICE FREQUENCY</div>
+  <div class="doc-page-num">25 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 26 · RENEWAL CALENDAR                     -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 09 · Renewals</div>
+        <h1 class="doc-head-title">Renewal Calendar &amp; Forecasting</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 26 / 46</div>
+  </div>
+
+  <p class="lede">Renewals are the most profitable revenue MICS earns — low CAC, high LTV. A missed renewal is a client that either leaves or gets re-sold through effort. The system treats every recurring service instance as a forecasted renewal opportunity.</p>
+
+  <h2 class="sub-title">Renewal Lifecycle</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(5, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">T-120</div><div class="flow-cell-title">Forecast</div><div class="flow-cell-desc">Renewal deal auto-created in pipeline</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">T-90</div><div class="flow-cell-title">Review</div><div class="flow-cell-desc">Account manager reviews health score</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">T-60</div><div class="flow-cell-title">Outreach</div><div class="flow-cell-desc">Renewal conversation scheduled</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">T-30</div><div class="flow-cell-title">Proposal</div><div class="flow-cell-desc">Renewal EL sent · Price adjustment</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">T-0</div><div class="flow-cell-title">Renewed</div><div class="flow-cell-desc">Signed · Payment · Work Order refresh</div></div>
+  </div>
+
+  <h2 class="sub-title">Renewal Forecasting Table</h2>
+  <p>Each quarter, the system produces a renewal forecast by department:</p>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Quarter</th><th style="width: 16%;">Clients Up for Renewal</th><th style="width: 16%;">AED Forecast</th><th style="width: 16%;">Retention Target</th><th>Owner</th></tr></thead>
+    <tbody>
+      <tr><td>Q2 2026</td><td>18 clients</td><td>AED 2.4M</td><td>88%</td><td>Dept Heads</td></tr>
+      <tr><td>Q3 2026</td><td>24 clients</td><td>AED 3.1M</td><td>88%</td><td>Dept Heads</td></tr>
+      <tr><td>Q4 2026</td><td>12 clients</td><td>AED 1.6M</td><td>88%</td><td>Dept Heads</td></tr>
+      <tr><td>Q1 2027</td><td>29 clients <em>(peak)</em></td><td>AED 4.2M</td><td>88%</td><td>Dept Heads</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Price Adjustment Rules</h2>
+  <ul class="bullet-list">
+    <li><strong>Standard annual uplift</strong>: 5% (tied to inflation + service cost growth)</li>
+    <li><strong>Premium client lock</strong>: Clients &gt; AED 500K annual spend can lock 2-year pricing for a 3% discount</li>
+    <li><strong>Scope expansion</strong>: New services added at renewal use current rate card, not legacy pricing</li>
+    <li><strong>Declining client discount</strong>: If a renewal pushback threatens loss, up to 10% discount is authorized at Manager tier; 10–20% requires Partner</li>
+  </ul>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Churn Definition</div>
+    A client is officially "churned" when 180 days pass after an expected renewal date without a signed renewal or active negotiation. Churned clients move to the Lost bucket and enter a 12-month nurture sequence for potential win-back.
+  </div>
+
+  <div class="doc-page-footer">9 · SERVICE FREQUENCY &amp; RENEWALS</div>
+  <div class="doc-page-num">26 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 27 · SALES TARGETS BY ROLE                -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 10 · Operations &amp; Governance</div>
+        <h1 class="doc-head-title">Sales Targets By Role</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 27 / 46</div>
+  </div>
+
+  <p class="lede">MICS operates a <strong>universal accountability</strong> model. Every role except pure Execution and pure Support has a measurable target. Targets are calibrated to role scope — a BD rep has individual revenue; a department head has team revenue plus personal revenue.</p>
+
+  <h2 class="sub-title">Target Matrix</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">Role</th><th style="width: 22%;">Target Type</th><th style="width: 22%;">Typical FY Target</th><th>Frequency</th></tr></thead>
+    <tbody>
+      <tr><td>BD Executive (T6)</td><td>Personal revenue</td><td>AED 600K</td><td>Annual · quarterly breakdown</td></tr>
+      <tr><td>BD Manager (T5)</td><td>Personal + small team</td><td>AED 800K personal · AED 1.2M team</td><td>Annual · quarterly</td></tr>
+      <tr><td>Department Head (T4)</td><td>Team + personal</td><td>AED 2.5M team · AED 500K personal</td><td>Annual</td></tr>
+      <tr><td>Partner (T2)</td><td>P&amp;L line</td><td>Business-line specific (AED 8M+)</td><td>Annual</td></tr>
+      <tr><td>Owner (T1)</td><td>Company revenue</td><td>AED 18M+ (scales yearly)</td><td>Annual · Board level</td></tr>
+      <tr><td>HR Head</td><td>Placements + retention</td><td>20 placements · 92% retention</td><td>Annual · quarterly</td></tr>
+      <tr><td>Finance Manager</td><td>Collection rate + close days</td><td>95% &lt; 30d · 5-day close</td><td>Monthly</td></tr>
+      <tr><td>Operations Manager</td><td>SLA + CSAT</td><td>95% SLA · CSAT ≥ 4.5</td><td>Quarterly</td></tr>
+      <tr><td>Admin Staff</td><td>Operational KPIs</td><td>24h response · 48h processing</td><td>Weekly average</td></tr>
+      <tr><td>Execution / Delivery (T6)</td><td><span class="pill pill-slate">No sales target</span></td><td>Delivery KPIs: 95% SLA · 90% on-time · CSAT ≥ 4.2</td><td>Per engagement</td></tr>
+      <tr><td>Support / Interns (T7)</td><td><span class="pill pill-slate">No sales target</span></td><td>Task completion KPIs</td><td>Weekly</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Target-Setting Process</h2>
+  <ol class="num-list">
+    <li><strong>November</strong> — Owner sets company-level revenue target for following FY.</li>
+    <li><strong>December</strong> — Partners break down company target by business line.</li>
+    <li><strong>Early January</strong> — Department Heads set team targets; individual targets discussed in 1:1s.</li>
+    <li><strong>Mid January</strong> — Individual targets signed off; IDPs (Individual Development Plans) written.</li>
+    <li><strong>Monthly</strong> — Managers review attainment in 1:1; flag under-performers early.</li>
+    <li><strong>Quarterly</strong> — Department-level reviews with Partners; targets can be adjusted with justification.</li>
+  </ol>
+
+  <div class="doc-page-footer">10 · SALES TARGETS</div>
+  <div class="doc-page-num">27 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 28 · PERFORMANCE VISIBILITY               -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 10 · Visibility</div>
+        <h1 class="doc-head-title">Performance Visibility Rules</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 28 / 46</div>
+  </div>
+
+  <p class="lede">Who can see whose numbers? MICS operates a balanced visibility model — private enough to avoid internal competition stress, public enough to drive accountability.</p>
+
+  <h2 class="sub-title">Self-Visibility (Every Employee Sees Their Own)</h2>
+  <ul class="bullet-list">
+    <li><strong>YTD revenue originated</strong> — personal number, updated live</li>
+    <li><strong>Pipeline value</strong> — weighted and unweighted</li>
+    <li><strong>Close rate</strong> — personal win percentage, 12-month rolling</li>
+    <li><strong>Activity score</strong> — calls, meetings, emails logged</li>
+    <li><strong>Client retention</strong> — % of owned clients retained in last 12 months</li>
+    <li><strong>CSAT / NPS</strong> — feedback from clients they own</li>
+    <li><strong>Attendance &amp; leave balance</strong> — personal record</li>
+    <li><strong>Training progress</strong> — assigned courses, completion %</li>
+  </ul>
+
+  <h2 class="sub-title">Team Visibility</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Viewer Role</th><th>Can See</th></tr></thead>
+    <tbody>
+      <tr><td>Manager (T5)</td><td>All direct reports' individual metrics · team aggregate</td></tr>
+      <tr><td>Department Head (T4)</td><td>All managers + all individuals in department · cross-team comparison</td></tr>
+      <tr><td>Associate Partner (T3)</td><td>All departments under their scope · operations aggregate</td></tr>
+      <tr><td>Partner (T2)</td><td>Full company performance · any individual (business need basis)</td></tr>
+      <tr><td>Owner (T1)</td><td>Everything</td></tr>
+      <tr><td>HR Head</td><td>All employee records (HR-relevant) · anonymized revenue rollups</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Public Scoreboards</h2>
+  <p>Certain metrics are publicly visible to all employees — the goal is transparency and friendly competition, not shame:</p>
+  <ul class="bullet-list">
+    <li><strong>Weekly Top Deals Won</strong> — shows name + deal size (no personal pipeline)</li>
+    <li><strong>Monthly CSAT Champions</strong> — Execution staff with highest client feedback</li>
+    <li><strong>Quarterly Revenue Leaderboard</strong> — BD team rankings (opt-in display of name)</li>
+    <li><strong>Attendance Recognition</strong> — perfect-attendance quarterly shout-outs</li>
+  </ul>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ What Is NOT Publicly Visible</div>
+    Individual salaries · individual performance review scores · personal health or leave type · disciplinary records · PIP status · individual client-level commissions. These are private between employee, manager, HR and the individual's own view.
+  </div>
+
+  <div class="doc-page-footer">10 · PERFORMANCE VISIBILITY</div>
+  <div class="doc-page-num">28 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 29 · OWNERSHIP RULES (DEEP DIVE)          -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 11 · Ownership</div>
+        <h1 class="doc-head-title">Client Ownership Rules · Deep Dive</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 29 / 46</div>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 1 · Creator Becomes Owner</div>
+    Every manually created lead, contact or account inherits the creator's Employee Code as its owner. This is the default, and it prevents "orphan" records with no accountability.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 2 · Web &amp; Chat Inquiries Are Exceptions</div>
+    Inbound inquiries via website form, chat widget, WhatsApp or hello@ email do NOT have a pre-existing owner. They are routed via two mechanisms: <strong>round-robin</strong> (default, distributes fairly) or <strong>first responder</strong> (whoever picks it up first owns it).
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 3 · Ownership = Sales Relationship</div>
+    The Owner is responsible for the client relationship — first point of contact for escalations, upsell opportunities, retention conversations. The Execution team delivers the service but does NOT own the relationship.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 4 · Ownership Transfers Are Logged</div>
+    Changing an owner requires a dropdown reason + free text. The transfer creates an append-only Handler History entry. Previous owners remain in history permanently.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 5 · Execution Never Owns Clients</div>
+    A Senior Tax Associate delivering VAT returns for 40 clients does not own any of them. The BD Owner / Account Manager retains the sales relationship. This allows execution specialists to focus on delivery quality without feeling obligated to upsell.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 6 · Source Owner Is Permanent Attribution</div>
+    The Lead Source Owner never changes. It tracks WHERE the lead came from (a BD rep's outbound effort, the marketing website, an event, an external referrer). This preserves attribution accuracy for both revenue crediting and marketing ROI calculation.
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Rule 7 · External Referral Source Is Permanent</div>
+    If the lead came via an external third party (partner firm, freelance referrer, employee of another company), that referrer is recorded permanently. This powers the external commission tracking (§12).
+  </div>
+
+  <h2 class="sub-title">Ownership Transfer Scenarios</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 24%;">Scenario</th><th>Typical Reason</th><th style="width: 16%;">Approver</th></tr></thead>
+    <tbody>
+      <tr><td>BD rep leaves MICS</td><td>Portfolio reassignment to another BD</td><td>Dept Head</td></tr>
+      <tr><td>BD promoted off-desk</td><td>Moving into leadership, passing book</td><td>Dept Head</td></tr>
+      <tr><td>Client requests new contact</td><td>Relationship dynamic (personal conflict, fit)</td><td>Partner</td></tr>
+      <tr><td>Specialty required</td><td>Deal scope now requires a different expertise</td><td>Owner's Manager</td></tr>
+      <tr><td>Workload balancing</td><td>Over-loaded BD, redistribution</td><td>Manager</td></tr>
+      <tr><td>Extended leave</td><td>Owner on &gt; 30-day leave · interim ownership</td><td>Manager</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">11 · OWNERSHIP RULES</div>
+  <div class="doc-page-num">29 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 30 · CLIENT HEALTH SCORE                  -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 11 · Retention</div>
+        <h1 class="doc-head-title">Client Health Score &amp; Retention Lifecycle</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 30 / 46</div>
+  </div>
+
+  <p class="lede">Every active client carries a Health Score (0–100). The score aggregates five weighted components and drives proactive retention outreach.</p>
+
+  <h2 class="sub-title">Health Score Formula</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 26%;">Component</th><th style="width: 12%;">Weight</th><th>Calculation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Payment Behavior</strong></td><td>25%</td><td>% of invoices paid within terms over last 12 months (100 = always on time, 0 = multiple late)</td></tr>
+      <tr><td><strong>Service Delivery Quality</strong></td><td>25%</td><td>% of SLAs met on this client's engagements (Execution-side input)</td></tr>
+      <tr><td><strong>Engagement Breadth</strong></td><td>20%</td><td>Number of active services (1 service = 40 · 2 = 60 · 3+ = 100)</td></tr>
+      <tr><td><strong>CSAT &amp; Feedback</strong></td><td>15%</td><td>Average CSAT from post-delivery surveys (normalized to 0–100)</td></tr>
+      <tr><td><strong>Communication Frequency</strong></td><td>15%</td><td>Meaningful touches / month (0 = orphan, 2+ = healthy)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Retention Lifecycle Stages</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Stage</th><th style="width: 14%;">Health Score</th><th style="width: 20%;">Required Action</th><th>Actor</th></tr></thead>
+    <tbody>
+      <tr><td><strong>New</strong></td><td>—</td><td>First 90 days: weekly check-ins</td><td>BD Owner + Exec Owner</td></tr>
+      <tr><td><strong>Active</strong></td><td>80+</td><td>Quarterly business review</td><td>Account Manager</td></tr>
+      <tr><td><strong>At Risk</strong></td><td>50–79</td><td>Recovery plan within 14 days</td><td>Account Manager + Dept Head</td></tr>
+      <tr><td><strong>Critical</strong></td><td>Below 50</td><td>Partner intervention · remediation</td><td>Partner</td></tr>
+      <tr><td><strong>Churned</strong></td><td>—</td><td>Nurture enrollment · post-mortem</td><td>Marketing + former Owner</td></tr>
+      <tr><td><strong>Returned</strong></td><td>Reset</td><td>"Welcome back" warmth · care plan</td><td>New Account Manager + Partner</td></tr>
+    </tbody>
+  </table>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Quarterly Retention Review</div>
+    Every quarter the Account Manager reviews all clients with Health Score &lt; 80. A written recovery plan is drafted, reviewed by the Dept Head and executed. Progress is measured at the following quarter review.
+  </div>
+
+  <div class="doc-page-footer">11 · OWNERSHIP &amp; RETENTION</div>
+  <div class="doc-page-num">30 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 31 · EXTERNAL REFERRAL COMMISSION         -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 12 · Referral Commission</div>
+        <h1 class="doc-head-title">External Referral &amp; Commission Tracking</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 31 / 46</div>
+  </div>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Important Distinction</div>
+    Commission tracking at MICS is for <strong>EXTERNAL referrers only</strong> — third-party partner firms, freelance consultants, former clients who introduce new clients, business contacts who send referrals. Internal BD staff earn revenue attribution (not commission) through their base + bonus structure; they are NOT paid on a per-deal commission basis.
+  </div>
+
+  <h2 class="sub-title">Referrer Tiers &amp; Rates</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 20%;">Tier</th><th style="width: 14%;">Rate</th><th style="width: 22%;">Paid On</th><th>Criteria</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Standard Referrer</strong></td><td>5%</td><td>First-year revenue (collected)</td><td>Any external party making their first referral</td></tr>
+      <tr><td><strong>VIP Referrer</strong></td><td>8%</td><td>First-year revenue (collected)</td><td>5+ successful referrals · annual value &gt; AED 500K to MICS</td></tr>
+      <tr><td><strong>Strategic Partner</strong></td><td>10%</td><td>First 2 years revenue (collected)</td><td>Formal partnership agreement · co-marketing · recurring pipeline</td></tr>
+      <tr><td><strong>Employee Referral</strong></td><td>3%</td><td>First invoice paid</td><td>MICS employee referring an external client · one-off, not team sales</td></tr>
+      <tr><td><strong>Former Client Referral</strong></td><td>Gift, not commission</td><td>—</td><td>Former clients receive a recognition gift (branded item, meal) — not cash commission, to maintain professional boundary</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Commission Tracking Fields</h2>
+  <p>Each external referrer has a Referrer record containing:</p>
+  <ul class="bullet-list">
+    <li><strong>Referrer Name</strong> (individual or company)</li>
+    <li><strong>Tier</strong> (dropdown: Standard / VIP / Strategic / Employee)</li>
+    <li><strong>Bank Details</strong> (encrypted, Finance-only)</li>
+    <li><strong>Tax Status</strong> (invoice-based / no-invoice · Freelancer / Company)</li>
+    <li><strong>Total Referrals Made</strong> (auto-count)</li>
+    <li><strong>Total Commission Earned</strong> (auto-calc)</li>
+    <li><strong>Commission Pending</strong> (earned, not yet paid)</li>
+    <li><strong>Last Payout Date</strong></li>
+  </ul>
+
+  <h2 class="sub-title">Payout Rules</h2>
+  <ul class="bullet-list">
+    <li>Commission is calculated on <strong>collected revenue</strong> only — not invoiced.</li>
+    <li>Payout happens <strong>quarterly</strong>, 30 days after quarter close (allows for refund/credit adjustments).</li>
+    <li>Minimum payout threshold is <strong>AED 500</strong>; below that, it accrues to the next quarter.</li>
+    <li>Refunded or credited amounts reduce the commission proportionally; if commission was already paid, clawback applies.</li>
+    <li>All payouts require <strong>CFO + Partner sign-off</strong>.</li>
+  </ul>
+
+  <div class="doc-page-footer">12 · EXTERNAL REFERRAL COMMISSION</div>
+  <div class="doc-page-num">31 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 32 · HR · ATTENDANCE                      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 13 · HR Operations</div>
+        <h1 class="doc-head-title">Attendance Tracking</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 32 / 46</div>
+  </div>
+
+  <p class="lede">Attendance is tracked at an individual Employee Code level across three staff types — office-based, field-based and remote. The method of check-in differs, but the record and approval flow are identical.</p>
+
+  <h2 class="sub-title">Check-In Methods</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">Staff Type</th><th style="width: 18%;">Method</th><th style="width: 22%;">Location Proof</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Office (UAE Dubai)</strong></td><td>Office WiFi IP</td><td>Office public IP whitelist</td><td>Auto on connect; Zoho People app or web</td></tr>
+      <tr><td><strong>Office (India Ahmedabad)</strong></td><td>Office WiFi IP</td><td>Office public IP whitelist</td><td>Auto on connect</td></tr>
+      <tr><td><strong>Field / Client Visit</strong></td><td>Mobile app + GPS</td><td>GPS coordinates logged</td><td>Must be within 500m of registered client address or pre-approved location</td></tr>
+      <tr><td><strong>Remote (India)</strong></td><td>VPN + mobile app</td><td>VPN session + GPS</td><td>Home office address pre-registered; GPS within 1km</td></tr>
+      <tr><td><strong>Remote (Other)</strong></td><td>VPN + 2FA</td><td>VPN session only</td><td>Cross-border; no GPS required but time-zone tracking active</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Late &amp; Absence Rules</h2>
+  <ul class="bullet-list">
+    <li><strong>Standard hours</strong>: 09:00 — 18:00 local office time (offset for remote = home local time)</li>
+    <li><strong>Grace period</strong>: 15 minutes · arrivals after 09:15 flagged "Late"</li>
+    <li><strong>Absence threshold</strong>: 90 minutes with no check-in = "Absent — No Call No Show"; auto-notification to Manager</li>
+    <li><strong>Emergency code</strong>: <code>911</code> text to HR = family emergency, converted to Emergency Leave retroactively</li>
+    <li><strong>Flex window</strong>: Senior staff (T4+) can work flex hours with advance notice; still required to log 8-hour days</li>
+  </ul>
+
+  <h2 class="sub-title">Monthly Attendance Summary</h2>
+  <p>Every employee receives a monthly summary on the 1st of each month showing:</p>
+  <div class="four-col">
+    <div class="mini-card"><div class="mini-card-label">Working Days</div><div class="mini-card-val">22</div></div>
+    <div class="mini-card"><div class="mini-card-label">Present</div><div class="mini-card-val">20</div></div>
+    <div class="mini-card"><div class="mini-card-label">Late Arrivals</div><div class="mini-card-val">2</div></div>
+    <div class="mini-card"><div class="mini-card-label">Attendance %</div><div class="mini-card-val">91%</div></div>
+  </div>
+
+  <div class="warn-box">
+    <div class="warn-box-label">◆ Disciplinary Thresholds</div>
+    3 unexplained lates in a month = verbal warning · 3 unexplained absences in 90 days = written warning · 5 unexplained absences in 180 days = PIP review with HR + Manager.
+  </div>
+
+  <div class="doc-page-footer">13 · HR · ATTENDANCE</div>
+  <div class="doc-page-num">32 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 33 · HR · LEAVE                           -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 13 · HR Operations</div>
+        <h1 class="doc-head-title">Leave Management</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 33 / 46</div>
+  </div>
+
+  <p class="lede">MICS offers nine leave categories aligned with UAE Labour Law and amplified for employee wellbeing. Each category has its own balance, eligibility and documentation requirement.</p>
+
+  <h2 class="sub-title">Leave Category Matrix</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 20%;">Category</th><th style="width: 14%;">Annual Allowance</th><th style="width: 16%;">Eligibility</th><th>Documentation</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Annual Leave</strong></td><td>30 calendar days</td><td>After probation (90 days)</td><td>Request 14 days in advance for &gt;5 days</td></tr>
+      <tr><td><strong>Sick Leave</strong></td><td>15 fully paid + 30 half-paid</td><td>From Day 1</td><td>Medical certificate for &gt;2 days</td></tr>
+      <tr><td><strong>Maternity</strong></td><td>60 calendar days fully paid</td><td>From Day 1</td><td>Medical confirmation of pregnancy</td></tr>
+      <tr><td><strong>Paternity</strong></td><td>5 working days</td><td>From Day 1</td><td>Birth certificate</td></tr>
+      <tr><td><strong>Hajj / Umrah (once)</strong></td><td>30 calendar days</td><td>After 2 years service</td><td>Travel confirmation</td></tr>
+      <tr><td><strong>Bereavement</strong></td><td>3–5 days (relationship-dependent)</td><td>From Day 1</td><td>Disclosure only</td></tr>
+      <tr><td><strong>Study / Exam</strong></td><td>10 working days / year</td><td>After 1 year service</td><td>Enrollment proof</td></tr>
+      <tr><td><strong>Emergency</strong></td><td>3 days</td><td>From Day 1</td><td>Post-event explanation</td></tr>
+      <tr><td><strong>Unpaid Leave</strong></td><td>Max 60 days / year</td><td>Pre-approval</td><td>Written request + reason</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Leave Application Flow</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(5, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">01</div><div class="flow-cell-title">Submit</div><div class="flow-cell-desc">Employee applies via Zoho People</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">02</div><div class="flow-cell-title">Manager Review</div><div class="flow-cell-desc">Approve · reject · request change</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">03</div><div class="flow-cell-title">HR Check</div><div class="flow-cell-desc">Policy compliance · balance check</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">04</div><div class="flow-cell-title">Calendar Update</div><div class="flow-cell-desc">Team calendar auto-updated</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">05</div><div class="flow-cell-title">Coverage Plan</div><div class="flow-cell-desc">Employee documents handoff</div></div>
+  </div>
+
+  <h2 class="sub-title">Approval Routing By Duration</h2>
+  <table class="doc-table">
+    <thead><tr><th>Duration</th><th>Approver Chain</th></tr></thead>
+    <tbody>
+      <tr><td>1 day</td><td>Line Manager → HR (info)</td></tr>
+      <tr><td>2–5 days</td><td>Line Manager → HR</td></tr>
+      <tr><td>6–15 days</td><td>Line Manager → Department Head → HR</td></tr>
+      <tr><td>16–30 days</td><td>Line Manager → Dept Head → Associate Partner → HR</td></tr>
+      <tr><td>30+ days</td><td>Line Manager → Partner → Owner → HR</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">13 · HR · LEAVE</div>
+  <div class="doc-page-num">33 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 34 · HR · ONBOARDING                      -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 13 · HR Operations</div>
+        <h1 class="doc-head-title">New Hire Onboarding · 21 Steps</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 34 / 46</div>
+  </div>
+
+  <p class="lede">A structured 21-step onboarding runs over the first 30 days. Steps are grouped into four phases; each step has an owner, deadline and verification checkpoint.</p>
+
+  <h2 class="sub-title">Phase 1 · Pre-Arrival (Steps 1–6)</h2>
+  <ol class="num-list">
+    <li>Offer accepted · contract signed · background check clear</li>
+    <li>Employee Code assigned (next sequential EMP-XXXX)</li>
+    <li>Zoho account provisioned (added to relevant shared login group)</li>
+    <li>Email signature generated · LinkedIn update drafted</li>
+    <li>Equipment requisition (laptop · monitor · access cards)</li>
+    <li>Day 1 plan shared with new hire and buddy</li>
+  </ol>
+
+  <h2 class="sub-title">Phase 2 · Day 1 (Steps 7–12)</h2>
+  <ol class="num-list" start="7">
+    <li>Office welcome · tour · meet team</li>
+    <li>HR paperwork · emergency contacts · tax forms · bank details</li>
+    <li>IT setup · passwords · 2FA configured</li>
+    <li><strong>Employee Code + PIN registered</strong> · first Zoho login</li>
+    <li>Manager 1:1 · role expectations review</li>
+    <li>Buddy pairing · introduction lunch</li>
+  </ol>
+
+  <h2 class="sub-title">Phase 3 · Week 1 (Steps 13–18)</h2>
+  <ol class="num-list" start="13">
+    <li>Compliance training · AML · data privacy · code of conduct</li>
+    <li>Tool training · Zoho CRM for BD / Books for Finance / People for all</li>
+    <li>First assigned task or shadowed engagement</li>
+    <li>Team meetings · cross-department introductions</li>
+    <li>Mid-week check-in with HR</li>
+    <li>End of Week 1 review with Manager · calibration on expectations</li>
+  </ol>
+
+  <h2 class="sub-title">Phase 4 · Month 1 (Steps 19–21)</h2>
+  <ol class="num-list" start="19">
+    <li>First real deliverable completed · feedback received</li>
+    <li>30-day check-in with Manager + HR · formal review</li>
+    <li>90-day probation goals set · IDP drafted</li>
+  </ol>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Completion Tracking</div>
+    Onboarding progress is tracked in Zoho People. At 30 days, if &lt;80% of checklist is complete, the Manager and HR Head review — either extend the plan or investigate why.
+  </div>
+
+  <div class="doc-page-footer">13 · HR · ONBOARDING</div>
+  <div class="doc-page-num">34 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 35 · RECRUITMENT PIPELINE                 -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 14 · Recruitment</div>
+        <h1 class="doc-head-title">Recruitment Pipeline</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 35 / 46</div>
+  </div>
+
+  <p class="lede">MICS operates two parallel recruitment functions: internal hiring (for MICS itself) and external recruitment services (a revenue-generating business line for clients). Both use the same pipeline structure in Zoho People + CRM.</p>
+
+  <h2 class="sub-title">Current Open Roles (Internal)</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 26%;">Role</th><th style="width: 14%;">Tier</th><th style="width: 16%;">Department</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td>Corporate Communication Experts</td><td>T5</td><td>Marketing</td><td><span class="pill pill-amber">High</span></td></tr>
+      <tr><td>Tech &amp; AI Experts</td><td>T5</td><td>Operations / IT</td><td><span class="pill pill-amber">High</span></td></tr>
+      <tr><td>Smart Admin + Sales Professionals</td><td>T6</td><td>BD · Operations</td><td><span class="pill pill-warn">Medium</span></td></tr>
+      <tr><td>Business Development Leaders (4)</td><td>T5</td><td>BD</td><td><span class="pill pill-amber">High</span></td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Recruitment Stages</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(6, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">01</div><div class="flow-cell-title">Sourced</div><div class="flow-cell-desc">Via LinkedIn, referral, job board</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">02</div><div class="flow-cell-title">Screened</div><div class="flow-cell-desc">HR phone screen · culture fit</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">03</div><div class="flow-cell-title">Interview L1</div><div class="flow-cell-desc">Hiring manager competency</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">04</div><div class="flow-cell-title">Interview L2</div><div class="flow-cell-desc">Dept Head + peer panel</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">05</div><div class="flow-cell-title">Offered</div><div class="flow-cell-desc">Offer letter generated</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">06</div><div class="flow-cell-title">Placed</div><div class="flow-cell-desc">Accepted · onboarding triggered</div></div>
+  </div>
+
+  <h2 class="sub-title">Who Should Apply Criteria (from Posting)</h2>
+  <div class="two-col">
+    <div>
+      <h3 class="micro-title">Hard Criteria</h3>
+      <ul class="bullet-list">
+        <li>Problem solvers — evidence of initiative</li>
+        <li>Fast learners — demonstrated pace</li>
+        <li>Strong communicators — written &amp; verbal</li>
+        <li>Ownership mindset — outcome over task</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="micro-title">Culture Criteria</h3>
+      <ul class="bullet-list">
+        <li>Ambitious — want more than a job</li>
+        <li>Work with visionaries &amp; builders</li>
+        <li>Growth-driven — hungry talent</li>
+        <li>High-ownership roles appetite</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="doc-page-footer">14 · RECRUITMENT</div>
+  <div class="doc-page-num">35 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 36 · INTERVIEW & OFFER                    -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 14 · Interview &amp; Offer</div>
+        <h1 class="doc-head-title">Interview Scorecards &amp; Offer Process</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 36 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Standardized Scorecard Dimensions</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Dimension</th><th style="width: 12%;">Weight</th><th>What We Assess</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Role Competence</strong></td><td>30%</td><td>Technical skills, relevant experience, quality of past work examples</td></tr>
+      <tr><td><strong>Ownership &amp; Drive</strong></td><td>20%</td><td>Evidence of taking initiative, going beyond the task, achievement orientation</td></tr>
+      <tr><td><strong>Communication</strong></td><td>15%</td><td>Clarity in writing and speech, ability to explain complex topics simply</td></tr>
+      <tr><td><strong>Learning Agility</strong></td><td>15%</td><td>Pace of learning new domains, curiosity, growth trajectory</td></tr>
+      <tr><td><strong>Culture Fit</strong></td><td>10%</td><td>Team dynamics, values alignment, working style</td></tr>
+      <tr><td><strong>Problem Solving</strong></td><td>10%</td><td>Live problem tackled during interview, structured thinking</td></tr>
+    </tbody>
+  </table>
+  <p>Each dimension is scored 1–5. Weighted average determines overall rating: &lt;3.0 = No · 3.0–3.5 = Lean No · 3.5–4.0 = Lean Yes · 4.0+ = Strong Yes.</p>
+
+  <h2 class="sub-title">Offer Generation Workflow</h2>
+  <ol class="num-list">
+    <li><strong>Hiring decision</strong> — panel debrief meeting, consensus required</li>
+    <li><strong>Compensation proposal</strong> — HR runs band check, proposes package</li>
+    <li><strong>Approval chain</strong> — Hiring Manager → Dept Head → Partner (for T4+)</li>
+    <li><strong>Offer letter drafted</strong> — merged from template with candidate data</li>
+    <li><strong>Verbal offer</strong> — Hiring Manager calls candidate, communicates package</li>
+    <li><strong>Written offer sent</strong> — Zoho Sign envelope · candidate countersigns</li>
+    <li><strong>Start date confirmed</strong> — pre-arrival phase begins</li>
+  </ol>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ Offer Acceptance SLA</div>
+    Candidates are given 7 calendar days to accept or decline an offer. If no response by day 7, a follow-up call from HR clarifies the gap. If no acceptance by day 14, the offer is formally withdrawn.
+  </div>
+
+  <div class="doc-page-footer">14 · RECRUITMENT · OFFER</div>
+  <div class="doc-page-num">36 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 37 · MARKETING WORKFLOWS                  -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 15 · Marketing</div>
+        <h1 class="doc-head-title">Marketing &amp; Communication Workflows</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 37 / 46</div>
+  </div>
+
+  <p class="lede">Marketing at MICS sits at the front of the revenue funnel. The team operates on a hub-and-spoke model — a central content calendar feeds email, social, web and events.</p>
+
+  <h2 class="sub-title">Marketing Channel Matrix</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 18%;">Channel</th><th style="width: 22%;">Primary Purpose</th><th style="width: 16%;">Cadence</th><th>Measured By</th></tr></thead>
+    <tbody>
+      <tr><td>LinkedIn Organic</td><td>Thought leadership · recruiting</td><td>3 posts / week</td><td>Impressions · engagement · leads</td></tr>
+      <tr><td>LinkedIn Paid</td><td>Demand generation</td><td>Always-on</td><td>Cost per lead · CPL by campaign</td></tr>
+      <tr><td>Email Newsletter</td><td>Nurture · retention</td><td>Bi-weekly</td><td>Open · click · reply rate</td></tr>
+      <tr><td>Website Blog</td><td>SEO · authority</td><td>1 article / week</td><td>Organic traffic · keyword rank</td></tr>
+      <tr><td>Events &amp; Webinars</td><td>High-intent pipeline</td><td>Monthly</td><td>Registrations · attendees · SQL rate</td></tr>
+      <tr><td>Podcast Appearances</td><td>Brand awareness</td><td>Quarterly</td><td>Listens · guest pipeline generated</td></tr>
+      <tr><td>WhatsApp Broadcasts</td><td>Client-only updates</td><td>Monthly</td><td>Read rate · response rate</td></tr>
+      <tr><td>Google Ads</td><td>High-intent capture</td><td>Always-on</td><td>CPC · conversion rate · CPL</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Attribution Model</h2>
+  <p>Leads are tracked using a multi-touch attribution model:</p>
+  <ul class="bullet-list">
+    <li><strong>First touch</strong> — the channel that first exposed the lead to MICS (30% weight)</li>
+    <li><strong>Last touch</strong> — the channel that generated the conversion event (30% weight)</li>
+    <li><strong>Middle touches</strong> — all intermediate channels (40% weight, distributed equally)</li>
+  </ul>
+
+  <h2 class="sub-title">Campaign Planning Cycle</h2>
+  <div class="flow-row" style="grid-template-columns: repeat(4, 1fr); gap: 6px;">
+    <div class="flow-cell"><div class="flow-cell-num">QUARTERLY</div><div class="flow-cell-title">Plan</div><div class="flow-cell-desc">Theme · budget · KPIs set</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">MONTHLY</div><div class="flow-cell-title">Brief</div><div class="flow-cell-desc">Content calendar · creative spec</div></div>
+    <div class="flow-cell active"><div class="flow-cell-num">WEEKLY</div><div class="flow-cell-title">Execute</div><div class="flow-cell-desc">Publish · amplify · respond</div></div>
+    <div class="flow-cell"><div class="flow-cell-num">WEEKLY</div><div class="flow-cell-title">Measure</div><div class="flow-cell-desc">Dashboard · retrospect · adjust</div></div>
+  </div>
+
+  <div class="doc-page-footer">15 · MARKETING</div>
+  <div class="doc-page-num">37 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 38 · COMMUNICATION INTEGRATIONS           -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 15 · Communication</div>
+        <h1 class="doc-head-title">Communication Integration Architecture</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 38 / 46</div>
+  </div>
+
+  <p class="lede">Every client and internal conversation must be captured in the CRM. MICS integrates three messaging channels — WhatsApp, SalesIQ live chat and Zoho Cliq — to ensure no interaction is lost or siloed.</p>
+
+  <h2 class="sub-title">WhatsApp Business API</h2>
+  <ul class="bullet-list">
+    <li><strong>Inbound</strong>: New contact → auto-creates Lead or attaches to existing Contact. Transcript posted to the Lead/Account record.</li>
+    <li><strong>Outbound</strong>: Template messages (appointment reminders, VAT filing confirmation, document requests) sent from CRM.</li>
+    <li><strong>Logged</strong>: Every message attributed to the sending Employee Code.</li>
+    <li><strong>Opt-in</strong>: Clients must opt-in to WhatsApp communication at onboarding; opt-in date logged.</li>
+  </ul>
+
+  <h2 class="sub-title">SalesIQ Live Chat</h2>
+  <ul class="bullet-list">
+    <li><strong>Website widget</strong>: Offers chat during business hours; after-hours shows email form.</li>
+    <li><strong>Visitor tracking</strong>: Records pages visited, time on site, referrer — creates "Visitor" record.</li>
+    <li><strong>Chat-to-lead</strong>: When visitor shares email/phone, Visitor converts to Lead automatically.</li>
+    <li><strong>Transcript archived</strong>: Full chat history attached to Lead; searchable later.</li>
+  </ul>
+
+  <h2 class="sub-title">Zoho Cliq (Internal)</h2>
+  <ul class="bullet-list">
+    <li><strong>Team channels</strong>: #deals · #approvals · #execution-ops · #hr-updates · #all-hands</li>
+    <li><strong>Automated notifications</strong>: Deal won, proposal approved, SLA breached, new hire starting</li>
+    <li><strong>Approval actions</strong>: Some approvals can be actioned directly from Cliq (thumbs-up vote)</li>
+    <li><strong>Client-facing channels</strong>: Premium clients get a dedicated Cliq channel with Exec + BD</li>
+  </ul>
+
+  <div class="info-box">
+    <div class="info-box-label">◉ No Shadow Channels</div>
+    Personal WhatsApp, personal email and informal chat groups are NOT permitted for client communication. Every touch must go through an approved, logged channel. Auditors can trace any conversation by Employee Code and date.
+  </div>
+
+  <div class="doc-page-footer">15 · COMMUNICATION</div>
+  <div class="doc-page-num">38 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 39 · DOCUMENT MANAGEMENT                  -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 16 · Documents</div>
+        <h1 class="doc-head-title">Document Management &amp; Drive Structure</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 39 / 46</div>
+  </div>
+
+  <h2 class="sub-title">Drive Folder Hierarchy</h2>
+  <pre style="background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px; padding: 14px; font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-2); line-height: 1.7;">
+MICS / WorkDrive
+├── 00 — Company
+│   ├── Policies &amp; SOPs
+│   ├── Financials (confidential · Partners only)
+│   └── Board Materials
+├── 01 — Clients
+│   └── [Client Name]
+│       ├── Engagement Letters
+│       │   ├── Drafts
+│       │   ├── Sent
+│       │   └── Signed   ← auto-saved fully-executed PDFs
+│       ├── KYC &amp; Onboarding Docs
+│       ├── Service Deliverables
+│       │   ├── VAT Filings / [Year] / [Quarter]
+│       │   ├── Audit Reports / [Year]
+│       │   ├── Corporate Tax Filings / [Year]
+│       │   └── Advisory Memos
+│       ├── Correspondence Archive (email / WhatsApp)
+│       └── Invoices &amp; Receipts
+├── 02 — Team
+│   └── [Employee Code] (personal space, private)
+├── 03 — Templates
+│   ├── Proposal Templates
+│   ├── Audit Workpaper Templates
+│   └── Internal Form Templates
+├── 04 — Training &amp; LMS
+└── 05 — Archive (7-year retention)
+  </pre>
+
+  <h2 class="sub-title">Auto-Filing Rules</h2>
+  <ul class="bullet-list">
+    <li>Signed engagement letters → <code>01 — Clients / [Client] / Engagement Letters / Signed /</code></li>
+    <li>Invoices generated → <code>01 — Clients / [Client] / Invoices &amp; Receipts / [YYYY] /</code></li>
+    <li>Email correspondence → <code>01 — Clients / [Client] / Correspondence Archive / Email / [YYYY-MM] /</code></li>
+    <li>WhatsApp transcripts → same folder pattern but <code>/ WhatsApp /</code></li>
+    <li>Delivered reports → <code>Service Deliverables / [Service] / [Year] /</code></li>
+  </ul>
+
+  <h2 class="sub-title">Version Control</h2>
+  <p>All documents use Zoho WorkDrive's version history. Each save creates a new version with attribution. Drafts have unlimited versions; "Signed" folder is locked (append-only).</p>
+
+  <div class="doc-page-footer">16 · DOCUMENTS</div>
+  <div class="doc-page-num">39 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 40 · CLIENT CREDENTIALS VAULT              -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 16 · Credentials</div>
+        <h1 class="doc-head-title">Client Portal Credentials Vault</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 40 / 46</div>
+  </div>
+
+  <p class="lede">To deliver regulatory filings, MICS holds login credentials to multiple government and banking portals on behalf of its clients. These credentials are the most sensitive data in the system and require the strongest controls.</p>
+
+  <h2 class="sub-title">Portals Managed</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 14%;">Portal</th><th style="width: 20%;">Authority</th><th style="width: 24%;">Used For</th><th>Credential Type</th></tr></thead>
+    <tbody>
+      <tr><td><strong>FTA</strong></td><td>Federal Tax Authority</td><td>VAT returns · Corp Tax · Excise</td><td>TRN · Username · Password · MFA</td></tr>
+      <tr><td><strong>DED</strong></td><td>Dept. of Economic Development</td><td>Trade licensing · renewals</td><td>License # · Username · Password</td></tr>
+      <tr><td><strong>MOF</strong></td><td>Ministry of Finance</td><td>Corporate Tax portal · ESR</td><td>Entity ID · Password · MFA</td></tr>
+      <tr><td><strong>GDRFA</strong></td><td>General Directorate of Residency</td><td>Visas · entry permits · EID</td><td>Establishment Card · Password</td></tr>
+      <tr><td><strong>ICP</strong></td><td>Identity &amp; Citizenship</td><td>Emirates ID · work permits</td><td>UID · Password</td></tr>
+      <tr><td><strong>Banking</strong></td><td>Various banks</td><td>Statement download for reconciliation</td><td>Account # · View-only login (never transactional)</td></tr>
+      <tr><td><strong>Insurance</strong></td><td>Daman / Oman Insurance / Others</td><td>Employee health insurance administration</td><td>Employer code · Password</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Security Controls</h2>
+  <ul class="bullet-list">
+    <li><strong>Encryption</strong>: AES-256 at rest, TLS 1.3 in transit</li>
+    <li><strong>Access</strong>: Only the Execution Owner(s) assigned to that client's services can view credentials; other staff see masked values</li>
+    <li><strong>Audit</strong>: Every password reveal is logged with Employee Code + timestamp + IP</li>
+    <li><strong>Rotation</strong>: Credentials rotated quarterly for Banking, annually for government portals</li>
+    <li><strong>Breach protocol</strong>: If a client credential is suspected compromised, MICS notifies client within 1 hour and initiates password reset with client</li>
+    <li><strong>Departure protocol</strong>: When an employee leaves, their view access is revoked within 1 hour; ability to log into shared departmental login also revoked</li>
+  </ul>
+
+  <div class="rule-box">
+    <div class="rule-box-label">◉ Client Consent</div>
+    Every credential entry requires documented client consent — a signed authorization letter (template ID <code>AUTH-CRED-01</code>) on file. Without this letter, credentials cannot be stored.
+  </div>
+
+  <div class="doc-page-footer">16 · CREDENTIALS VAULT</div>
+  <div class="doc-page-num">40 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 41 · AUTOMATION RULES (Part 1)            -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 17 · Automation</div>
+        <h1 class="doc-head-title">Automation Rules Reference · AUTO-001 → 025</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 41 / 46</div>
+  </div>
+
+  <p class="lede">All 50+ automation rules are versioned in Zoho Flow and catalogued here. Each rule has a unique code, trigger, condition, action and owning domain.</p>
+
+  <table class="doc-table compact">
+    <thead><tr><th style="width: 8%;">Code</th><th style="width: 26%;">Rule Name</th><th style="width: 22%;">Trigger</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>AUTO-001</td><td>New web lead routing</td><td>Form submission</td><td>Round-robin assign · Cliq notify owner</td></tr>
+      <tr><td>AUTO-002</td><td>WhatsApp inbound capture</td><td>New WA message</td><td>Create Lead · attach transcript</td></tr>
+      <tr><td>AUTO-003</td><td>Lead score calculation</td><td>Lead field change</td><td>Recalculate 0–100 score · flag Hot</td></tr>
+      <tr><td>AUTO-004</td><td>Hot lead SLA alert</td><td>Score ≥ 80 · no touch in 1h</td><td>SMS + Cliq ping owner + manager</td></tr>
+      <tr><td>AUTO-005</td><td>Lead stale warning</td><td>No activity in 14d</td><td>Email owner + manager</td></tr>
+      <tr><td>AUTO-006</td><td>Deal stage aging</td><td>&gt; 2× stage SLA</td><td>Flag "Stalled" · notify manager</td></tr>
+      <tr><td>AUTO-007</td><td>Close date in the past</td><td>Daily check</td><td>Email owner · require update in 3d</td></tr>
+      <tr><td>AUTO-008</td><td>Single-threaded warning</td><td>Deal with 1 contact for 7d</td><td>Cliq ping · suggest multi-thread</td></tr>
+      <tr><td>AUTO-009</td><td>Discount approval routing</td><td>Discount field populated</td><td>Route to appropriate tier</td></tr>
+      <tr><td>AUTO-010</td><td>Concession creep alert</td><td>Cumulative concession &gt; 15%</td><td>Re-approval from Partner required</td></tr>
+      <tr><td>AUTO-011</td><td>Proposal expiry reminder</td><td>T-7, T-1 days</td><td>Email owner · auto-void on expiry</td></tr>
+      <tr><td>AUTO-012</td><td>Proposal approval chain</td><td>Proposal submitted</td><td>Route per deal size matrix</td></tr>
+      <tr><td>AUTO-013</td><td>Engagement letter archive</td><td>Zoho Sign completion</td><td>Save PDF to Drive · notify both parties</td></tr>
+      <tr><td>AUTO-014</td><td>Invoice auto-generate</td><td>Deal stage = Signed</td><td>Create invoice per deposit terms</td></tr>
+      <tr><td>AUTO-015</td><td>Payment gate status</td><td>Books payment received</td><td>Update gate status · if CLEARED → WO</td></tr>
+      <tr><td>AUTO-016</td><td>WO auto-create</td><td>Gate CLEARED</td><td>Create WO · assign Exec Owner · 6-item handoff</td></tr>
+      <tr><td>AUTO-017</td><td>Handoff meeting schedule</td><td>WO created · deal &gt; 100K</td><td>Auto-schedule via Zoho Meeting</td></tr>
+      <tr><td>AUTO-018</td><td>SLA missed D+1</td><td>Task / service due · not done</td><td>Notify Exec Owner</td></tr>
+      <tr><td>AUTO-019</td><td>SLA escalation D+3</td><td>Still not done</td><td>Notify Manager</td></tr>
+      <tr><td>AUTO-020</td><td>SLA escalation D+7</td><td>Still not done</td><td>Notify Dept Head + BD Owner</td></tr>
+      <tr><td>AUTO-021</td><td>Quarterly reminder schedule</td><td>Service = Quarterly</td><td>T-30/14/7/3/0 reminders</td></tr>
+      <tr><td>AUTO-022</td><td>Yearly reminder schedule</td><td>Service = Yearly</td><td>T-60/30/14/7/3/0 reminders</td></tr>
+      <tr><td>AUTO-023</td><td>Renewal forecast create</td><td>WO close date</td><td>Create T-120 renewal deal in pipeline</td></tr>
+      <tr><td>AUTO-024</td><td>Invoice overdue escalation</td><td>+7, +14, +21, +30 days</td><td>Notify per collection ladder</td></tr>
+      <tr><td>AUTO-025</td><td>Credit note approval</td><td>CN &gt; 10% of invoice</td><td>Route to Dept Head · CFO</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">17 · AUTOMATION RULES</div>
+  <div class="doc-page-num">41 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 42 · AUTOMATION RULES (Part 2)            -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 17 · Automation</div>
+        <h1 class="doc-head-title">Automation Rules Reference · AUTO-026 → 050</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 42 / 46</div>
+  </div>
+
+  <table class="doc-table compact">
+    <thead><tr><th style="width: 8%;">Code</th><th style="width: 26%;">Rule Name</th><th style="width: 22%;">Trigger</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>AUTO-026</td><td>Client health score</td><td>Daily recompute</td><td>Update Health Score · flag &lt; 80</td></tr>
+      <tr><td>AUTO-027</td><td>At-Risk client alert</td><td>Health &lt; 80</td><td>Notify Account Mgr · draft recovery plan</td></tr>
+      <tr><td>AUTO-028</td><td>Churn classification</td><td>180d post expected renewal</td><td>Mark Churned · nurture enrollment</td></tr>
+      <tr><td>AUTO-029</td><td>Referral commission calc</td><td>Invoice paid &amp; referrer present</td><td>Create payable for referrer</td></tr>
+      <tr><td>AUTO-030</td><td>Quarterly commission payout</td><td>Quarter close + 30d</td><td>Batch payout with CFO approval</td></tr>
+      <tr><td>AUTO-031</td><td>Commission clawback</td><td>Credit note issued</td><td>Reduce referrer payable or claw back</td></tr>
+      <tr><td>AUTO-032</td><td>Attendance late flag</td><td>Check-in &gt; 09:15</td><td>Flag Late · notify after 3 in month</td></tr>
+      <tr><td>AUTO-033</td><td>Absence no-call alert</td><td>No check-in by 10:30</td><td>Notify manager · HR</td></tr>
+      <tr><td>AUTO-034</td><td>Leave balance reminder</td><td>Q4 start</td><td>Show "days unused" to prevent hoarding</td></tr>
+      <tr><td>AUTO-035</td><td>Leave approval routing</td><td>Leave submitted</td><td>Route by duration per §13 matrix</td></tr>
+      <tr><td>AUTO-036</td><td>Onboarding checklist</td><td>New hire start date</td><td>Generate 21-step tasks · assign owners</td></tr>
+      <tr><td>AUTO-037</td><td>Probation review trigger</td><td>+90d from start</td><td>Schedule review · open IDP</td></tr>
+      <tr><td>AUTO-038</td><td>Performance review cycle</td><td>Q2 + Q4 start</td><td>Open self-assessment for all staff</td></tr>
+      <tr><td>AUTO-039</td><td>Training expiry alert</td><td>T-30 days from cert expiry</td><td>Notify employee + manager</td></tr>
+      <tr><td>AUTO-040</td><td>Document auto-file</td><td>Doc uploaded with tags</td><td>Move to Drive per tag mapping</td></tr>
+      <tr><td>AUTO-041</td><td>Credentials reveal audit</td><td>Any password shown</td><td>Log Employee Code · IP · timestamp</td></tr>
+      <tr><td>AUTO-042</td><td>Credentials rotation</td><td>Quarterly</td><td>Alert Exec Owner to rotate banking</td></tr>
+      <tr><td>AUTO-043</td><td>Marketing attribution</td><td>Lead → Deal conversion</td><td>Calculate multi-touch attribution · update channel ROI</td></tr>
+      <tr><td>AUTO-044</td><td>Campaign budget alert</td><td>80% budget consumed</td><td>Notify marketing lead · pause ads if 100%</td></tr>
+      <tr><td>AUTO-045</td><td>NPS survey dispatch</td><td>WO closed + 14d</td><td>Send CSAT + NPS survey via email</td></tr>
+      <tr><td>AUTO-046</td><td>NPS detractor alert</td><td>NPS ≤ 6</td><td>Notify Account Mgr · schedule follow-up</td></tr>
+      <tr><td>AUTO-047</td><td>Cliq approval digest</td><td>Hourly</td><td>Push pending approvals to approvers' Cliq</td></tr>
+      <tr><td>AUTO-048</td><td>Weekly pipeline report</td><td>Monday 09:00</td><td>Email pipeline health to BD + Managers</td></tr>
+      <tr><td>AUTO-049</td><td>Monthly attendance report</td><td>1st of month</td><td>Email summary to each employee + manager</td></tr>
+      <tr><td>AUTO-050</td><td>Quarterly renewal forecast</td><td>Quarter start</td><td>Generate forecast by department · email Partners</td></tr>
+    </tbody>
+  </table>
+
+  <div class="doc-page-footer">17 · AUTOMATION RULES</div>
+  <div class="doc-page-num">42 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 43 · ACCESS CONTROL MATRIX                -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 18 · Security</div>
+        <h1 class="doc-head-title">Access Control Matrix</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 43 / 46</div>
+  </div>
+
+  <p class="lede">Access is role-based and scope-limited. The matrix below defines what each tier can see and do across the system's major data objects.</p>
+
+  <table class="doc-table compact">
+    <thead><tr><th style="width: 22%;">Data Object</th><th>Partner (T2)</th><th>Dept Head (T4)</th><th>BD (T5/T6)</th><th>Exec (T6) assigned</th><th>Exec (T6) other</th><th>HR / Support</th></tr></thead>
+    <tbody>
+      <tr><td>Leads</td><td>Full</td><td>Full</td><td>Own + team</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Accounts · Financial Data</td><td>Full</td><td>Full</td><td>Full</td><td>Full (assigned)</td><td>Masked</td><td>—</td></tr>
+      <tr><td>Deal Amount · Contract</td><td>Full</td><td>Full</td><td>Own + team</td><td>Read (assigned)</td><td>—</td><td>—</td></tr>
+      <tr><td>Portal Credentials</td><td>Full</td><td>Full</td><td>—</td><td>Full (assigned)</td><td>—</td><td>—</td></tr>
+      <tr><td>Invoices &amp; Payments</td><td>Full</td><td>Full</td><td>Own deals</td><td>View only</td><td>—</td><td>Accounts only</td></tr>
+      <tr><td>Work Orders</td><td>Full</td><td>Full</td><td>Read (own deals)</td><td>Full (assigned)</td><td>Own dept</td><td>—</td></tr>
+      <tr><td>HR · Personal Records</td><td>Full</td><td>Own team</td><td>Own only</td><td>Own only</td><td>Own only</td><td>Full</td></tr>
+      <tr><td>Individual Salaries</td><td>Full</td><td>Own team</td><td>Own only</td><td>Own only</td><td>Own only</td><td>Full</td></tr>
+      <tr><td>Personal Revenue YTD</td><td>Full</td><td>Full</td><td>Own YTD</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Team Scoreboard (public)</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td><td>Full</td></tr>
+      <tr><td>Performance Review Scores</td><td>Full</td><td>Own team</td><td>Own only</td><td>Own only</td><td>Own only</td><td>Full</td></tr>
+      <tr><td>Admin · Users / Roles</td><td>Full</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>Automation Rules</td><td>Full</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Access Legend</h2>
+  <div class="four-col">
+    <div class="mini-card"><div class="mini-card-label">Full</div><div class="mini-card-sub">View · edit · export · delete</div></div>
+    <div class="mini-card"><div class="mini-card-label">Scoped</div><div class="mini-card-sub">Own records or assigned scope only</div></div>
+    <div class="mini-card"><div class="mini-card-label">Masked</div><div class="mini-card-sub">Field hidden (e.g., passwords)</div></div>
+    <div class="mini-card"><div class="mini-card-label">— (none)</div><div class="mini-card-sub">Record does not appear</div></div>
+  </div>
+
+  <div class="doc-page-footer">18 · ACCESS CONTROL</div>
+  <div class="doc-page-num">43 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 44 · AUDIT & SECURITY                     -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 18 · Security</div>
+        <h1 class="doc-head-title">Audit Log &amp; Security Posture</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 44 / 46</div>
+  </div>
+
+  <h2 class="sub-title">What Is Logged</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Event Category</th><th style="width: 14%;">Retention</th><th>Fields Captured</th></tr></thead>
+    <tbody>
+      <tr><td>Record Create</td><td>7 years</td><td>Employee Code · Record ID · Module · Timestamp · Source IP</td></tr>
+      <tr><td>Record Edit</td><td>7 years</td><td>Employee Code · Record ID · Field changed · Old value · New value · Timestamp</td></tr>
+      <tr><td>Record Delete</td><td>7 years + soft delete</td><td>Employee Code · Record ID · Reason · Timestamp (hard delete after retention)</td></tr>
+      <tr><td>Record View (sensitive)</td><td>7 years</td><td>Employee Code · Record ID · Timestamp · IP (only for Financial, HR, Credentials)</td></tr>
+      <tr><td>Export (any data)</td><td>7 years</td><td>Employee Code · File hash · Row count · Timestamp · Destination</td></tr>
+      <tr><td>Credential Reveal</td><td>7 years</td><td>Employee Code · Client · Portal · Timestamp · IP</td></tr>
+      <tr><td>Permission Change</td><td>7 years</td><td>Admin Code · Target Employee · Old role · New role · Timestamp · Justification</td></tr>
+      <tr><td>Login (success / fail)</td><td>1 year</td><td>Employee Code · IP · Device · User Agent · Outcome · Timestamp</td></tr>
+      <tr><td>PIN failure lock</td><td>1 year</td><td>Employee Code · Attempts · Lock duration · Auto-unlock time</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">Immutability Guarantees</h2>
+  <ul class="bullet-list">
+    <li><strong>Handler History</strong> (ownership changes) — append-only, cannot be deleted or edited.</li>
+    <li><strong>Audit log</strong> — cryptographic chain of hashes; any tamper is detectable.</li>
+    <li><strong>Signed Engagement Letters</strong> — the folder is WORM (Write Once Read Many) protected.</li>
+    <li><strong>Invoices issued</strong> — never deleted; only superseded by credit notes which reference them.</li>
+  </ul>
+
+  <h2 class="sub-title">Compliance Certifications</h2>
+  <ul class="bullet-list">
+    <li><strong>ISO 27001</strong> — Information security management (target: 2027)</li>
+    <li><strong>UAE Personal Data Protection Law (PDPL)</strong> — compliant from Dec 2025</li>
+    <li><strong>FTA Tax Agency licensing</strong> — MICS is an FTA-registered Tax Agent</li>
+    <li><strong>ICAI / ACCA memberships</strong> — individual practitioner certifications</li>
+  </ul>
+
+  <div class="doc-page-footer">18 · AUDIT &amp; SECURITY</div>
+  <div class="doc-page-num">44 / 46</div>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE 45 · INTEGRATION ARCHITECTURE             -->
+<!-- ============================================= -->
+<div class="doc-page">
+  <div class="doc-head">
+    <div class="doc-head-left">
+      <div class="mics-logo-sm">MICS</div>
+      <div class="doc-head-meta">
+        <div class="doc-head-kicker">Section 19 · Architecture</div>
+        <h1 class="doc-head-title">Integration Architecture</h1>
+      </div>
+    </div>
+    <div class="doc-head-right">MICS-WF-V4-2026<br>PAGE 45 / 46</div>
+  </div>
+
+  <p class="lede">MICS operates 14 Zoho applications plus 4 external integrations, orchestrated through Zoho Flow. Every app writes to and reads from a unified data layer; employee codes and client IDs are the two primary join keys.</p>
+
+  <h2 class="sub-title">Zoho Application Stack</h2>
+  <table class="doc-table">
+    <thead><tr><th style="width: 22%;">Application</th><th style="width: 18%;">Primary Use</th><th>Key Integrations</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Zoho CRM</strong></td><td>Leads · Deals · Accounts</td><td>Books (invoices) · Sign (proposals) · Projects (WO) · Cliq (alerts)</td></tr>
+      <tr><td><strong>Zoho Books</strong></td><td>Invoicing · Payments · GL</td><td>CRM (deal → invoice) · Bank feed · Analytics</td></tr>
+      <tr><td><strong>Zoho People</strong></td><td>Employees · Attendance · Leave</td><td>CRM (Employee Codes) · Payroll · Analytics</td></tr>
+      <tr><td><strong>Zoho Sign</strong></td><td>E-signature · EL &amp; contracts</td><td>CRM · WorkDrive</td></tr>
+      <tr><td><strong>Zoho Flow</strong></td><td>Cross-app automation · 50+ rules</td><td>All apps + external webhooks</td></tr>
+      <tr><td><strong>Zoho Analytics</strong></td><td>Dashboards · reports · attribution</td><td>Reads from CRM · Books · People · Marketing</td></tr>
+      <tr><td><strong>Zoho Forms</strong></td><td>Website capture · onboarding forms</td><td>CRM · People</td></tr>
+      <tr><td><strong>Zoho SalesIQ</strong></td><td>Website live chat · visitor tracking</td><td>CRM (chat → lead)</td></tr>
+      <tr><td><strong>Zoho Marketing Plus</strong></td><td>Email · social · campaign mgmt</td><td>CRM · Analytics</td></tr>
+      <tr><td><strong>Zoho Cliq</strong></td><td>Internal team chat · alerts</td><td>CRM · Flow · Projects</td></tr>
+      <tr><td><strong>Zoho Mail</strong></td><td>Email · email-to-CRM</td><td>CRM (email thread attach)</td></tr>
+      <tr><td><strong>Zoho WorkDrive</strong></td><td>Document storage · versioning</td><td>CRM · Sign · Books</td></tr>
+      <tr><td><strong>Zoho Projects</strong></td><td>Work Order tasks · SLA tracking</td><td>CRM · People · Cliq</td></tr>
+      <tr><td><strong>Zoho Meeting</strong></td><td>Video calls · handoff meetings</td><td>CRM · Cliq · Mail (calendar)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sub-title">External Integrations</h2>
+  <ul class="bullet-list">
+    <li><strong>WhatsApp Business Cloud API</strong> — inbound lead capture, outbound template messages</li>
+    <li><strong>3CX PBX</strong> — phone calls, recording, click-to-dial from CRM</li>
+    <li><strong>Bank feed (Finshape / local bank APIs)</strong> — statement auto-import for reconciliation</li>
+    <li><strong>Clearbit / LinkedIn Sales Nav</strong> — lead enrichment (industry, employee count, tech stack)</li>
+  </ul>
+
+  <h2 class="sub-title">Data Flow Summary</h2>
+  <p style="font-size: 11px;">A lead enters via <strong>Forms / SalesIQ / WhatsApp</strong> → lands in <strong>CRM</strong> → enriched via <strong>Clearbit</strong> → qualified by BD → <strong>Sign</strong> dispatches engagement letter → upon signing, <strong>Books</strong> auto-generates invoice → once paid, <strong>Projects</strong> creates Work Order → <strong>People</strong> tracks Exec delivery → <strong>Analytics</strong> rolls up all of the above into dashboards → <strong>Cliq</strong> notifies humans at every critical transition.</p>
+
+  <div style="margin-top: 30px; padding: 16px; background: var(--navy); color: white; border-radius: 10px; text-align: center;">
+    <div style="font-size: 10px; letter-spacing: 2px; opacity: 0.7; font-weight: 700;">END OF DOCUMENT</div>
+    <div style="font-size: 14px; font-weight: 700; margin-top: 6px;">MICS International · Workflow Documentation V4</div>
+    <div style="font-size: 10px; opacity: 0.85; margin-top: 4px;">Paired with Visual Design Guide V4 · 85 pages (separate document)</div>
+  </div>
+
+  <div class="doc-page-footer">19 · INTEGRATION ARCHITECTURE · END</div>
+  <div class="doc-page-num">45 / 46</div>
+</div>
+
+</body>
+</html>
