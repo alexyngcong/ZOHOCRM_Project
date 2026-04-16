@@ -23,7 +23,6 @@ html { scroll-behavior: smooth; }
 body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; color: var(--text-1); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
 
-/* Top bar */
 .topbar { border-bottom: 1px solid var(--border); background: var(--white); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); background: rgba(255,255,255,0.95); }
 .topbar-inner { display: flex; justify-content: space-between; align-items: center; padding: 14px 24px; max-width: 1200px; margin: 0 auto; }
 .logo-block { display: flex; align-items: center; gap: 10px; }
@@ -33,10 +32,7 @@ body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; color: var(-
 .topbar-nav { display: flex; gap: 4px; align-items: center; }
 .topbar-link { padding: 8px 14px; font-size: 13px; font-weight: 600; color: var(--text-2); text-decoration: none; border-radius: 6px; }
 .topbar-link:hover { background: var(--surface-2); color: var(--navy); }
-.topbar-btn { padding: 8px 16px; font-size: 13px; font-weight: 600; background: var(--navy); color: white; text-decoration: none; border-radius: 7px; }
-.topbar-btn:hover { background: var(--navy-hover); }
 
-/* Hero */
 .hero { padding: 80px 0 60px; background: linear-gradient(180deg, var(--white) 0%, var(--navy-soft) 100%); position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--navy); }
 .hero-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; text-align: center; }
@@ -53,7 +49,6 @@ body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; color: var(-
 .btn-hero-outline { padding: 12px 26px; background: var(--white); color: var(--navy); font-size: 14px; font-weight: 700; text-decoration: none; border-radius: 8px; border: 1.5px solid var(--border-strong); display: inline-flex; align-items: center; gap: 8px; }
 .btn-hero-outline:hover { background: var(--navy-soft); border-color: var(--navy); }
 
-/* Docs grid */
 .docs-grid { padding: 70px 0; }
 .section-kicker { font-size: 11px; color: var(--navy); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; text-align: center; }
 .section-title { font-size: 34px; font-weight: 800; color: var(--charcoal); letter-spacing: -1px; text-align: center; margin-bottom: 12px; }
@@ -83,7 +78,6 @@ body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; color: var(-
 .doc-btn-outline { background: var(--white); color: var(--text-1); border: 1px solid var(--border-strong); }
 .doc-btn-outline:hover { background: var(--surface-2); border-color: var(--navy); }
 
-/* Features */
 .features { padding: 70px 0; background: var(--surface-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1000px; margin: 0 auto; }
 .feature-card { background: var(--white); padding: 24px; border-radius: 12px; border: 1px solid var(--border); }
@@ -96,55 +90,36 @@ body { font-family: 'Plus Jakarta Sans', -apple-system, sans-serif; color: var(-
 .feature-title { font-size: 15px; font-weight: 700; color: var(--charcoal); margin-bottom: 6px; }
 .feature-desc { font-size: 12px; color: var(--text-3); line-height: 1.7; }
 
-/* Sections list */
-.sections-wrap { padding: 70px 0; }
-.sections-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 1000px; margin: 0 auto; }
-.sec-col h3 { font-size: 18px; font-weight: 800; color: var(--charcoal); letter-spacing: -0.3px; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--navy); }
-.sec-col.design h3 { border-bottom-color: var(--amber); }
-.sec-item { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--border-light); font-size: 13px; }
-.sec-item-num { font-family: 'JetBrains Mono', monospace; color: var(--text-4); font-weight: 600; min-width: 32px; font-size: 11px; padding-top: 1px; }
-.sec-item-text { flex: 1; color: var(--text-2); }
-
-/* Privacy / Info box */
 .info-banner { padding: 40px 0; background: var(--navy); color: white; }
 .info-banner-inner { max-width: 900px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; }
 .info-banner-icon { width: 64px; height: 64px; border-radius: 16px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 28px; }
 .info-banner-title { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px; }
 .info-banner-desc { font-size: 13px; opacity: 0.85; line-height: 1.7; }
 
-/* Footer */
 footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
 .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.footer-brand .mics-logo { border-color: white; color: white; margin-bottom: 10px; }
-.footer-brand-text { font-size: 12px; opacity: 0.85; line-height: 1.7; max-width: 300px; }
-.footer-col h4 { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 14px; opacity: 0.6; }
-.footer-col a { display: block; color: rgba(255,255,255,0.8); font-size: 13px; text-decoration: none; padding: 5px 0; }
-.footer-col a:hover { color: white; }
-.footer-bottom { padding-top: 20px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; opacity: 0.6; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; flex-wrap: wrap; gap: 10px; }
+.footer-brand { text-align: center; }
+.footer-brand .mics-logo { border-color: white; color: white; margin-bottom: 14px; }
+.footer-brand-text { font-size: 12px; opacity: 0.85; line-height: 1.7; max-width: 480px; margin: 0 auto 20px; }
+.footer-bottom { padding-top: 20px; text-align: center; font-size: 11px; opacity: 0.6; font-family: 'JetBrains Mono', monospace; letter-spacing: 0.5px; border-top: 1px solid rgba(255,255,255,0.1); }
 
-/* Responsive */
 @media (max-width: 900px) {
   .hero-title { font-size: 42px; }
   .doc-cards { grid-template-columns: 1fr; }
   .features-grid { grid-template-columns: 1fr; }
-  .sections-grid { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
   .hero-meta { gap: 18px; }
+  .info-banner-inner { grid-template-columns: 1fr; text-align: center; }
+  .info-banner-icon { margin: 0 auto; }
 }
 @media (max-width: 600px) {
   .topbar-nav { display: none; }
   .hero { padding: 60px 0 40px; }
   .hero-title { font-size: 34px; }
-  .footer-top { grid-template-columns: 1fr; }
-  .info-banner-inner { grid-template-columns: 1fr; text-align: center; }
-  .info-banner-icon { margin: 0 auto; }
 }
 </style>
 </head>
 <body>
 
-<!-- Topbar -->
 <header class="topbar">
   <div class="topbar-inner">
     <div class="logo-block">
@@ -156,14 +131,11 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
     </div>
     <nav class="topbar-nav">
       <a href="#documents" class="topbar-link">Documents</a>
-      <a href="#features" class="topbar-link">Features</a>
-      <a href="#sections" class="topbar-link">Sections</a>
-      <a href="https://github.com/" class="topbar-btn">GitHub</a>
+      <a href="#features" class="topbar-link">Principles</a>
     </nav>
   </div>
 </header>
 
-<!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
     <span class="hero-kicker">MICS International · V4.0 Final</span>
@@ -179,12 +151,11 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
 
     <div class="hero-cta">
       <a href="#documents" class="btn-hero-primary">📚 Browse Documents →</a>
-      <a href="./docs/workflow-documentation.pdf" class="btn-hero-outline">⇣ Download Workflow PDF</a>
+      <a href="./workflow-documentation.pdf" class="btn-hero-outline">⇣ Download Workflow PDF</a>
     </div>
   </div>
 </section>
 
-<!-- Documents Grid -->
 <section class="docs-grid" id="documents">
   <div class="container">
     <div class="section-kicker">Two Companion Documents</div>
@@ -192,7 +163,6 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
     <p class="section-sub">One document describes <em>what the system does</em> — rules, workflows, attribution logic. The other shows <em>what it looks like</em> — every CRM screen in the ecosystem.</p>
 
     <div class="doc-cards">
-      <!-- Doc 1 -->
       <div class="doc-card">
         <div class="doc-card-top">
           <div class="doc-card-icon">01</div>
@@ -206,12 +176,11 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
           </div>
         </div>
         <div class="doc-card-bottom">
-          <a href="./docs/workflow-documentation.html" class="doc-btn doc-btn-primary">View HTML →</a>
-          <a href="./docs/workflow-documentation.pdf" class="doc-btn doc-btn-outline">⇣ PDF</a>
+          <a href="./workflow-documentation.html" class="doc-btn doc-btn-primary">View HTML →</a>
+          <a href="./workflow-documentation.pdf" class="doc-btn doc-btn-outline">⇣ PDF</a>
         </div>
       </div>
 
-      <!-- Doc 2 -->
       <div class="doc-card design-guide">
         <div class="doc-card-top">
           <div class="doc-card-icon">02</div>
@@ -225,15 +194,14 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
           </div>
         </div>
         <div class="doc-card-bottom">
-          <a href="./docs/visual-design-guide.html" class="doc-btn doc-btn-primary">View HTML →</a>
-          <a href="./docs/visual-design-guide.pdf" class="doc-btn doc-btn-outline">⇣ PDF</a>
+          <a href="./visual-design-guide.html" class="doc-btn doc-btn-primary">View HTML →</a>
+          <a href="./visual-design-guide.pdf" class="doc-btn doc-btn-outline">⇣ PDF</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Features -->
 <section class="features" id="features">
   <div class="container">
     <div class="section-kicker">Design Principles</div>
@@ -275,61 +243,6 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
   </div>
 </section>
 
-<!-- Sections Overview -->
-<section class="sections-wrap" id="sections">
-  <div class="container">
-    <div class="section-kicker">Table of Contents</div>
-    <h2 class="section-title">Navigate by section</h2>
-
-    <div class="sections-grid">
-      <!-- Workflow doc -->
-      <div class="sec-col">
-        <h3>📘 Workflow Documentation</h3>
-        <div class="sec-item"><span class="sec-item-num">01</span><span class="sec-item-text">Executive Summary &amp; System Overview</span></div>
-        <div class="sec-item"><span class="sec-item-num">02</span><span class="sec-item-text">Organizational Structure &amp; Role Hierarchy</span></div>
-        <div class="sec-item"><span class="sec-item-num">03</span><span class="sec-item-text">Employee Code System</span></div>
-        <div class="sec-item"><span class="sec-item-num">04</span><span class="sec-item-text">Lead Management Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">05</span><span class="sec-item-text">Deal &amp; Sales Pipeline Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">06</span><span class="sec-item-text">Proposal &amp; Approval Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">07</span><span class="sec-item-text">Payment Gate &amp; Invoice Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">08</span><span class="sec-item-text">Execution &amp; Service Delivery Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">09</span><span class="sec-item-text">Service Frequency &amp; Renewal Management</span></div>
-        <div class="sec-item"><span class="sec-item-num">10</span><span class="sec-item-text">Sales Targets &amp; Performance Tracking</span></div>
-        <div class="sec-item"><span class="sec-item-num">11</span><span class="sec-item-text">Client Ownership &amp; Attribution Rules</span></div>
-        <div class="sec-item"><span class="sec-item-num">12</span><span class="sec-item-text">External Referral &amp; Commission Tracking</span></div>
-        <div class="sec-item"><span class="sec-item-num">13</span><span class="sec-item-text">HR, Attendance &amp; Leave Workflows</span></div>
-        <div class="sec-item"><span class="sec-item-num">14</span><span class="sec-item-text">Recruitment Pipeline Workflow</span></div>
-        <div class="sec-item"><span class="sec-item-num">15</span><span class="sec-item-text">Marketing &amp; Communication Workflows</span></div>
-        <div class="sec-item"><span class="sec-item-num">16</span><span class="sec-item-text">Document &amp; Credentials Management</span></div>
-        <div class="sec-item"><span class="sec-item-num">17</span><span class="sec-item-text">Automation Rules Reference (50 rules)</span></div>
-        <div class="sec-item"><span class="sec-item-num">18</span><span class="sec-item-text">Access Control &amp; Security Matrix</span></div>
-        <div class="sec-item"><span class="sec-item-num">19</span><span class="sec-item-text">Integration Architecture</span></div>
-      </div>
-
-      <!-- Design guide -->
-      <div class="sec-col design">
-        <h3>🎨 Visual Design Guide</h3>
-        <div class="sec-item"><span class="sec-item-num">A</span><span class="sec-item-text">Cover &amp; Table of Contents <span style="color:var(--text-4);">(pp 1–2)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">B</span><span class="sec-item-text">Zoho CRM Sales <span style="color:var(--text-4);">(pp 3–24)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">C</span><span class="sec-item-text">Execution Hub <span style="color:var(--text-4);">(pp 25–30)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">D</span><span class="sec-item-text">Notifications &amp; Approvals <span style="color:var(--text-4);">(pp 31–32)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">E</span><span class="sec-item-text">Zoho Books <span style="color:var(--text-4);">(pp 33–38)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">F</span><span class="sec-item-text">Zoho People · HR <span style="color:var(--text-4);">(pp 39–48)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">G</span><span class="sec-item-text">Self-Service Portal <span style="color:var(--text-4);">(pp 49–52)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">H</span><span class="sec-item-text">Recruitment <span style="color:var(--text-4);">(pp 53–55)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">I</span><span class="sec-item-text">Marketing Hub <span style="color:var(--text-4);">(pp 56–60)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">J</span><span class="sec-item-text">Communications <span style="color:var(--text-4);">(pp 61–63)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">K</span><span class="sec-item-text">Forms &amp; Sign <span style="color:var(--text-4);">(pp 64–67)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">L</span><span class="sec-item-text">Analytics <span style="color:var(--text-4);">(pp 68–71)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">M</span><span class="sec-item-text">Flow &amp; Automation <span style="color:var(--text-4);">(pp 72–74)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">N</span><span class="sec-item-text">Admin &amp; System <span style="color:var(--text-4);">(pp 75–79)</span></span></div>
-        <div class="sec-item"><span class="sec-item-num">O</span><span class="sec-item-text">Business Views <span style="color:var(--text-4);">(pp 80–85)</span></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Privacy Banner -->
 <section class="info-banner">
   <div class="info-banner-inner">
     <div class="info-banner-icon">🔒</div>
@@ -340,38 +253,14 @@ footer { background: var(--charcoal); color: white; padding: 48px 0 24px; }
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="mics-logo">MICS</div>
-        <div class="footer-brand-text">MICS International — Comprehensive Financial Services. Zoho ecosystem documentation for workflows, CRM designs, automation rules and governance. V4.0 Final, effective 15 April 2026.</div>
-      </div>
-      <div class="footer-col">
-        <h4>Documents</h4>
-        <a href="./docs/workflow-documentation.html">Workflow Doc (HTML)</a>
-        <a href="./docs/workflow-documentation.pdf">Workflow Doc (PDF)</a>
-        <a href="./docs/visual-design-guide.html">Design Guide (HTML)</a>
-        <a href="./docs/visual-design-guide.pdf">Design Guide (PDF)</a>
-      </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <a href="./README.md">README</a>
-        <a href="./CHANGELOG.md">Changelog</a>
-        <a href="./LICENSE">License</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contacts</h4>
-        <a>Office of the Partners</a>
-        <a>Head of Accounting &amp; Compliances</a>
-        <a>HR &amp; Admin Manager</a>
-        <a>IT Support · EMP-014</a>
-      </div>
+    <div class="footer-brand">
+      <div class="mics-logo">MICS</div>
+      <div class="footer-brand-text">MICS International — Comprehensive Financial Services. Zoho ecosystem documentation for workflows, CRM designs, automation rules and governance. V4.0 Final, effective 15 April 2026.</div>
     </div>
     <div class="footer-bottom">
-      <span>MICS-WF-V4-2026 · MICS-VDG-V4-2026 · Effective 15 APR 2026</span>
-      <span>© MICS International · Internal use only</span>
+      MICS-WF-V4-2026 · MICS-VDG-V4-2026 · © MICS International · Internal use only
     </div>
   </div>
 </footer>
