@@ -1,0 +1,41 @@
+# OS / editor artefacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Build / temp
+*.tmp
+*.bak
+*.log
+.tmp/
+.cache/
+node_modules/
+
+# Private / staging
+*-draft.html
+*-scratch.html
+*-private.*
+*-personal.*
+_working/
+drafts/
+
+# Python cache (PDF generation scripts)
+__pycache__/
+*.pyc
+*.pyo
+
+# Local PDF generation artefacts
+headless_crash.log
+ShaderCache/
+GPUCache/
+
+# Environment
+.env
+.env.local
+secrets.*
+credentials.*
